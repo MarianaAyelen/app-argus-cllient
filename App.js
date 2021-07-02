@@ -2,10 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import logo from './assets/argusIcon.png'; 
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 
 
 export default function App() {
@@ -30,7 +26,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Image source={logo} style={{ width: 100, height: 100 }} /> 
+      <Image source={logo} style={styles.logoStyle} /> 
       <Text>Argus</Text>
 
 
@@ -46,5 +42,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
+  logoStyle: {
+    width: 100,
+    height: 100,
+  },
 });
