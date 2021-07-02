@@ -2,11 +2,18 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import logo from './assets/argusIcon.png'; 
+import { useFonts } from 'expo-font';
 
 
 export default function App() {
 
   const [serverResponse, setServerResponse] = useState();
+
+  const [loaded] = useFonts({
+    titleFont: require('./assets/fonts/bigote.ttf'),
+    font4: require('./assets/fonts/font1.ttf'),
+  });
+
 
   const callSomeApi = async() => {
     try{
@@ -25,9 +32,20 @@ export default function App() {
 
 
   return (
+
+
     <View style={styles.container}>
-      <Image source={logo} style={styles.logoStyle} /> 
-      <Text>Argus</Text>
+      <View style={styles.column}>
+        <View style={styles.row}>
+        <Image source={logo} style={styles.logoStyle} /> 
+          <Text style={styles.argusStyle}>Argus</Text>
+        </View>
+          <Text style={styles.locationStyle}>Location Traker</Text>
+        <View style={styles.row}>
+        </View>
+
+      </View>
+      
 
 
       <Text>{`El servidor te dice: ${serverResponse}`}</Text>
@@ -38,13 +56,29 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    position: 'absolute',
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 40,
+    marginLeft: 20
+  },  
+  column: {
+    flexDirection: 'column'
+  },
+  row: {
+    flexDirection: 'row'
   },
   logoStyle: {
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 60,
   },
+  argusStyle: {
+    fontFamily: 'titleFont',
+    color: '#2E86C1',
+    fontSize: 20,
+    marginTop: 20
+  },
+  locationStyle: {
+    fontFamily: 'font4',
+    color: '#2E86C1',
+  }
 });
