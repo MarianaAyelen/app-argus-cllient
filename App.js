@@ -1,19 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import logo from './assets/argusIcon.png'; 
-import { useFonts } from 'expo-font';
 
 
 export default function App() {
 
   const [serverResponse, setServerResponse] = useState();
-
-  const [loaded] = useFonts({
-    titleFont: require('./assets/fonts/bigote.ttf'),
-    font4: require('./assets/fonts/font1.ttf'),
-  });
-
 
   const callSomeApi = async() => {
     try{
@@ -32,24 +25,37 @@ export default function App() {
 
 
   return (
-
-
     <View style={styles.container}>
-      <View style={styles.column}>
-        <View style={styles.row}>
-        <Image source={logo} style={styles.logoStyle} /> 
-          <Text style={styles.argusStyle}>Argus</Text>
-        </View>
-          <Text style={styles.locationStyle}>Location Traker</Text>
-        <View style={styles.row}>
-        </View>
-
-      </View>
-      
-
-
-      <Text>{`El servidor te dice: ${serverResponse}`}</Text>
       <StatusBar style="auto" />
+      <View style={styles.row}>
+        <View style={styles.column}>
+          <View style={styles.row}>
+            <Image source={logo} style={styles.logoStyle} /> 
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.argusStyle}>Argus</Text>
+          </View>
+        </View>
+        <View>
+          <Text style={styles.locationStyle}>Location Traker</Text>  
+        </View>
+      </View>
+
+      <View style={styles.row, {alignItems:'center', marginTop: 110}}>
+        <TouchableOpacity onPress={() => alert('Hello, world!')} style={styles.button}>
+          <Text style={styles.buttonText}>Iniciar sesión</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row, {alignItems: 'center'}}>
+        <TouchableOpacity onPress={() => alert('Hello, world!')} style={styles.button}>
+          <Text style={styles.buttonText}>Registrarse</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row, {marginTop:300, marginLeft:210}}>
+        <Text>{`El servidor te dice: ${serverResponse}`}</Text>
+      </View>
     </View>
   );
 }
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginTop: 40,
     marginLeft: 20
-  },  
+  },   
   column: {
     flexDirection: 'column'
   },
@@ -72,13 +78,30 @@ const styles = StyleSheet.create({
     height: 60,
   },
   argusStyle: {
-    fontFamily: 'titleFont',
+    fontFamily: 'Roboto',
     color: '#2E86C1',
     fontSize: 20,
-    marginTop: 20
   },
   locationStyle: {
-    fontFamily: 'font4',
+    fontFamily: 'serif',
     color: '#2E86C1',
-  }
+    fontSize: 30,
+    marginTop: 20,
+    marginLeft: 30,
+  },
+  button: {
+    backgroundColor: "#2E86C1",
+    padding: 20,
+    borderRadius: 15,
+    marginTop: 50,
+    width: 250,
+    height: 100,
+    justifyContent: 'center',
+
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'center'
+  }, 
 });
