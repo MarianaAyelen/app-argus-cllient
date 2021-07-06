@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import logo from '.././assets/argusIcon.png'; 
 import { useNavigation } from '@react-navigation/native';
+import HeaderApp from './HeaderApp';
 
 export default function Inicio() {
   const [serverResponse, setServerResponse] = useState();
@@ -26,41 +26,27 @@ export default function Inicio() {
 
   return (
     <View style={styles.container}>
-    <StatusBar style="auto" />
-    <View style={styles.row}>
-      <View style={styles.column}>
-        <View style={styles.row}>
-          <Image source={logo} style={styles.logoStyle} /> 
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.argusStyle}>Argus</Text>
-        </View>
+      <StatusBar style="auto" />
+      <HeaderApp />
+
+      <View style={styles.row, {alignItems:'center', marginTop: 110}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.button}>
+          <Text style={styles.buttonText}>Iniciar sesión</Text>
+        </TouchableOpacity>
       </View>
-      <View>
-        <Text style={styles.locationStyle}>Location Traker</Text>  
+
+      <View style={styles.row, {alignItems: 'center'}}>
+        <TouchableOpacity onPress={() => alert('Hello, world!')} style={styles.button}>
+          <Text style={styles.buttonText}>Registrarse</Text>
+        </TouchableOpacity>
       </View>
-    </View>
 
-    <View style={styles.row, {alignItems:'center', marginTop: 110}}>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.button}>
-        <Text style={styles.buttonText}>Iniciar sesión</Text>
-      </TouchableOpacity>
-    </View>
-
-    <View style={styles.row, {alignItems: 'center'}}>
-      <TouchableOpacity onPress={() => alert('Hello, world!')} style={styles.button}>
-        <Text style={styles.buttonText}>Registrarse</Text>
-      </TouchableOpacity>
-    </View>
-
-    <View style={styles.row, {marginTop:200, marginLeft:210}}>
-      <Text>{`El servidor te dice: ${serverResponse}`}</Text>
-    </View>
+      <View style={styles.row, {marginTop:200, marginLeft:210}}>
+        <Text>{`El servidor te dice: ${serverResponse}`}</Text>
+      </View>
   </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

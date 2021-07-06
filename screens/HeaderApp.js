@@ -1,15 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
-import HeaderApp from './HeaderApp';
 
-export default function Login() {
-
+export default function HeaderApp() {
     return (
-        <View style={styles.container}>
-            <StatusBar style="auto" />
-            <HeaderApp />
+        <View style={styles.row}>
+            <View style={styles.column}>
+                <View style={styles.row}>
+                <Image source={logo} style={styles.logoStyle} /> 
+                </View>
+                <View style={styles.row}>
+                <Text style={styles.argusStyle}>Argus</Text>
+                </View>
+            </View>
+            <View>
+                <Text style={styles.locationStyle}>Location Traker</Text>  
+            </View>
         </View>
     );
 }
@@ -46,20 +52,4 @@ const styles = StyleSheet.create({
       marginTop: 20,
       marginLeft: 30,
     },
-    button: {
-      backgroundColor: "#2E86C1",
-      padding: 20,
-      borderRadius: 15,
-      marginTop: 50,
-      width: 250,
-      height: 100,
-      justifyContent: 'center',
-  
-    },
-    buttonText: {
-      fontSize: 20,
-      color: '#fff',
-      textAlign: 'center'
-    }, 
   });
-  

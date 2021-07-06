@@ -9,16 +9,16 @@ const Stack = createStackNavigator();
 function NavStack() {
   return (
      <Stack.Navigator>
-      <Stack.Screen 
-        name="Inicio" 
-        component={Inicio} 
-        options={{ title: 'Bienvenido' }}
-      />
-      <Stack.Screen 
-        name="Login" 
-        component={Login} 
-        options={{ title: 'Iniciar Sesión' }}
-      />
+        <Stack.Screen 
+          name="Inicio" 
+          component={Inicio} 
+          options={{ title: 'Bienvenido' }}
+        />
+        <Stack.Screen 
+          name="Login" 
+          component={Login} 
+          options={{ title: 'Iniciar Sesión' }}
+        />
     </Stack.Navigator>
   );
 }
