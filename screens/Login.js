@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
 
@@ -8,6 +8,25 @@ export default function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState('');
+
+    async function loginRequest(userName, password) {
+      try{
+        let response = await fetch(`https://app-argus-server.herokuapp.com/sign-in?username=${userName}&password=${password}`);
+        let json = await response.json();
+        if(response.ok){
+          alert(json.response);
+        }else{
+          setModalText(json.message);
+          setModalVisible(true);
+        }
+        
+        return json;
+      } catch (error) {
+        alert(error);
+      };
+    }
 
     return (
         <View style={styles.container}>
@@ -37,31 +56,33 @@ export default function Login() {
             </View>
 
             <View style={styles.row, {alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => loginRequest(username, password)} style={styles.button}>
+                <TouchableOpacity onPress={() => loginRequest(username, password)} style={styles.buttonSignIn}>
                 <Text style={styles.buttonText}>Sign In</Text>
                 </TouchableOpacity>
             </View>
             
+
+            <View style={styles.centeredView}>
+            <Modal animationType="fade" transparent={true} visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}>
+
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>{modalText}</Text>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.textStyle}>Cerrar</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
+          </View>
+
         </View>
     );
-}
-
-
-async function loginRequest(userName, password) {
-  try{
-    let response = await fetch(`https://app-argus-server.herokuapp.com/sign-in?username=${userName}&password=${password}`);
-    let json = await response.json();
-    if(response.ok){
-      alert(json.response);
-    }else{
-      alert(json.message);
-    }
-
-    
-    return json;
-  } catch (error) {
-    alert(error);
-  };
 }
 
 const styles = StyleSheet.create({
@@ -77,7 +98,7 @@ const styles = StyleSheet.create({
     row: {
       flexDirection: 'row'
     },
-    button: {
+    buttonSignIn: {
       backgroundColor: "#2E86C1",
       padding: 20,
       borderRadius: 15,
@@ -105,5 +126,49 @@ const styles = StyleSheet.create({
         color: '#2E86C1',
         fontSize: 15,
       },
+
+      centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+      },
+      buttonClose: {
+        backgroundColor: "#C0392B",
+        borderRadius: 15,
+        width: '80%',
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 18
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 15,
+        color: "#C0392B",
+      }
   });
   
