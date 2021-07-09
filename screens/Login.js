@@ -6,7 +6,7 @@ import HeaderApp from './HeaderApp';
 
 export default function Login() {
 
-    const [userName, setUserName] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     return (
@@ -16,10 +16,10 @@ export default function Login() {
             <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
                 <Text style={styles.inputLabel}>Usuario: </Text>
                 <TextInput
-                value={userName}
+                value={username}
                 maxLength = {12}
-                onChangeText={(userName) => setUserName(userName)}
-                placeholder={'UserName'}
+                onChangeText={(username) => setUsername(username)}
+                placeholder={'Username'}
                 style={styles.input}
                 />
             </View>
@@ -37,13 +37,31 @@ export default function Login() {
             </View>
 
             <View style={styles.row, {alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => alert('Bienvenido: ' + userName)} style={styles.button}>
+                <TouchableOpacity onPress={() => loginRequest(username, password)} style={styles.button}>
                 <Text style={styles.buttonText}>Sign In</Text>
                 </TouchableOpacity>
             </View>
             
         </View>
     );
+}
+
+
+async function loginRequest(userName, password) {
+  try{
+    let response = await fetch(`https://app-argus-server.herokuapp.com/sign-in?username=${userName}&password=${password}`);
+    let json = await response.json();
+    if(response.ok){
+      alert(json.response);
+    }else{
+      alert(json.message);
+    }
+
+    
+    return json;
+  } catch (error) {
+    alert(error);
+  };
 }
 
 const styles = StyleSheet.create({
