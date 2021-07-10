@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
+
+    const navigation = useNavigation();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,13 +19,11 @@ export default function Login() {
         let response = await fetch(`https://app-argus-server.herokuapp.com/sign-in?username=${userName}&password=${password}`);
         let json = await response.json();
         if(response.ok){
-          alert(json.response);
+          navigation.navigate('Menu');
         }else{
           setModalText(json.message);
           setModalVisible(true);
         }
-        
-        return json;
       } catch (error) {
         alert(error);
       };
@@ -63,7 +64,7 @@ export default function Login() {
             
 
             <View style={styles.centeredView}>
-            <Modal animationType="fade" transparent={true} visible={modalVisible}
+            <Modal animationType="fadegit " transparent={true} visible={modalVisible}
               onRequestClose={() => {
                 setModalVisible(!modalVisible);
               }}>

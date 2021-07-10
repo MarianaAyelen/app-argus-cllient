@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
 
 export default function HeaderApp() {
+
     return (
         <View style={styles.row}>
             <View style={styles.column}>

@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Inicio from './screens/Inicio';
 import Login from './screens/Login';
+import Menu from './screens/Menu';
 import React from 'react';
 
 const Stack = createStackNavigator();
@@ -18,6 +19,11 @@ function NavStack() {
           name="Login" 
           component={Login} 
           options={{ title: 'Iniciar Sesión' }}
+        />
+        <Stack.Screen 
+          name="Menu" 
+          component={Menu} 
+          options={{ title: 'Menú' }}
         />
     </Stack.Navigator>
   );
