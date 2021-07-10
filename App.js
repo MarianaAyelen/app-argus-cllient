@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Inicio from './screens/Inicio';
 import Login from './screens/Login';
 import Menu from './screens/Menu';
+import Registro from './screens/Registro';
 import React from 'react';
 
 const Stack = createStackNavigator();
@@ -24,6 +25,11 @@ function NavStack() {
           name="Menu" 
           component={Menu} 
           options={{ title: 'Menú' }}
+        />
+        <Stack.Screen 
+          name="Registro" 
+          component={Registro} 
+          options={{ title: 'Registarte' }}
         />
     </Stack.Navigator>
   );

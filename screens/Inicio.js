@@ -36,7 +36,7 @@ export default function Inicio() {
       </View>
 
       <View style={styles.row, {alignItems: 'center'}}>
-        <TouchableOpacity onPress={() => alert('Hello, world!')} style={styles.button}>
+        <TouchableOpacity onPress={() =>  navigation.navigate('Registro')} style={styles.button}>
           <Text style={styles.buttonText}>Registrarse</Text>
         </TouchableOpacity>
       </View>
