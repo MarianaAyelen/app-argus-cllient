@@ -3,35 +3,45 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
+import call from 'react-native-phone-call'
 
 export default function Menu(){
 
-    return(
-        <View style={styles.container}>
-            <StatusBar style="auto" />
-            <HeaderApp />
+  const args = {
+    number: '5491125620754', 
+    prompt: false 
+  }
 
-            <View style={styles.row, {alignItems:'center', marginTop: 40}}>
-                <TouchableOpacity onPress={() => alert("Llamar")} style={styles.button}>
-                <Text style={styles.buttonText}>Llamar</Text>
-                </TouchableOpacity>
-            </View>
+  function callModule() {
+    call(args).catch(console.error);
+  }
 
-            <View style={styles.row, {alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => alert('Ver mapa')} style={styles.button}>
-                <Text style={styles.buttonText}>Ver mapa</Text>
-                </TouchableOpacity>
-            </View>
+  return(
+      <View style={styles.container}>
+          <StatusBar style="auto" />
+          <HeaderApp />
 
-            
-            <View style={styles.row, {alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => alert('Ver alarmas')} style={styles.button}>
-                <Text style={styles.buttonText}>Ver alarmas</Text>
-                </TouchableOpacity>
-            </View>
+          <View style={styles.row, {alignItems:'center', marginTop: 40}}>
+              <TouchableOpacity onPress={() => callModule()} style={styles.button}>
+              <Text style={styles.buttonText}>Llamar</Text>
+              </TouchableOpacity>
+          </View>
 
-        </View>
-    );
+          <View style={styles.row, {alignItems: 'center'}}>
+              <TouchableOpacity onPress={() => alert('Ver mapa')} style={styles.button}>
+              <Text style={styles.buttonText}>Ver mapa</Text>
+              </TouchableOpacity>
+          </View>
+
+          
+          <View style={styles.row, {alignItems: 'center'}}>
+              <TouchableOpacity onPress={() => alert('Ver alarmas')} style={styles.button}>
+              <Text style={styles.buttonText}>Ver alarmas</Text>
+              </TouchableOpacity>
+          </View>
+
+      </View>
+  );
 
 }
 

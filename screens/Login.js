@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
-import logo from '.././assets/argusIcon.png'; 
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 
