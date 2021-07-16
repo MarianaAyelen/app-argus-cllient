@@ -3,14 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
-import call from 'react-native-phone-call'
+import call from 'react-native-phone-call';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Menu(){
-
+export default function Menu({ route, navigation }){
+ 
   const args = {
     number: '5491125620754', 
     prompt: false 
   }
+
+  const { userToken } = route.params;
 
   function callModule() {
     call(args).catch(console.error);
@@ -20,7 +23,7 @@ export default function Menu(){
       <View style={styles.container}>
           <StatusBar style="auto" />
           <HeaderApp />
-
+          <Text>token: {JSON.stringify(userToken)}</Text>
           <View style={styles.row, {alignItems:'center', marginTop: 40}}>
               <TouchableOpacity onPress={() => callModule()} style={styles.button}>
               <Text style={styles.buttonText}>Llamar</Text>
@@ -39,7 +42,6 @@ export default function Menu(){
               <Text style={styles.buttonText}>Ver alarmas</Text>
               </TouchableOpacity>
           </View>
-
       </View>
   );
 

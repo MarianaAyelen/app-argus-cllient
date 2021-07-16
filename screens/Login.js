@@ -18,9 +18,12 @@ export default function Login() {
         let response = await fetch(`https://app-argus-server.herokuapp.com/sign-in?username=${userName}&password=${password}`);
         let json = await response.json();
         if(response.ok){
-          navigation.navigate('Menu');
+          let token = json.token;
+          navigation.navigate('Menu', {
+            userToken: token
+          });
         }else{
-          setModalText(json.message);
+          setModalText(json.response);
           setModalVisible(true);
         }
       } catch (error) {
