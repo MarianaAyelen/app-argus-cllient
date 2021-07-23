@@ -15,15 +15,43 @@ export default function Menu({ route, navigation }){
 
   const { userToken } = route.params;
 
-  function callModule() {
+  async function callModule() {
+    let number = await getModuleNumber();
+    const args = {
+      number: number, 
+      prompt: false 
+    }
     call(args).catch(console.error);
   }
+
+  async function getModuleNumber(userName, password) {
+    try{
+      let token = JSON.stringify(userToken).replace(/['"]+/g, '');
+      let response = await fetch(`https://app-argus-server.herokuapp.com/module/get-number`, { 
+        method: 'get', 
+        mode: 'cors',
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': token
+        }
+      });
+      let json = await response.json();
+      if(response.ok){
+        return json.number
+      }else{
+        alert(json)
+      }
+    } catch (error) {
+      alert(error);
+    };
+  }
+
 
   return(
       <View style={styles.container}>
           <StatusBar style="auto" />
           <HeaderApp />
-          <Text>token: {JSON.stringify(userToken)}</Text>
+        
           <View style={styles.row, {alignItems:'center', marginTop: 40}}>
               <TouchableOpacity onPress={() => callModule()} style={styles.button}>
               <Text style={styles.buttonText}>Llamar</Text>

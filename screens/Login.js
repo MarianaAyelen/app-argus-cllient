@@ -15,7 +15,7 @@ export default function Login() {
 
     async function loginRequest(userName, password) {
       try{
-        let response = await fetch(`https://app-argus-server.herokuapp.com/sign-in?username=${userName}&password=${password}`);
+        let response = await fetch(`https://app-argus-server.herokuapp.com/login?username=${userName}&password=${password}`);
         let json = await response.json();
         if(response.ok){
           let token = json.token;
