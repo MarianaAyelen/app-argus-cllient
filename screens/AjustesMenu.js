@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Button, Menu, Divider, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/native';
 
 export default function AjustesMenu(){
     const [showMenu, setShowMenu] = useState(false);
-
+    const navigation = useNavigation();
 
     return(
         <View style={{}}>
@@ -23,12 +23,12 @@ export default function AjustesMenu(){
                 </TouchableOpacity>
                 }>
                 <Menu.Item onPress={() => {}} title="Configurar módulo" />
-                <Menu.Item onPress={() => {}} title="Cambiar contraseña" />
+                <Menu.Item onPress={() => {navigation.navigate('ContraseniaNueva')}} title="Cambiar contraseña" />
+                <Menu.Item onPress={() => {}} title="Ayuda" />
                 <Divider />
-                <Menu.Item onPress={() => {}} 
+                <Menu.Item onPress={() => {navigation.navigate('Inicio')}} 
                     title="Cerrar sesión"
                     icon="logout"
-                    style={styles.logOutStyle}
                 />
             </Menu>
         </View>
@@ -41,8 +41,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         width: '100%',
         height: '100%'
-      },
-      logOutStyle: {
-          color: 'red'
       }
   });

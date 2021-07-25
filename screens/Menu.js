@@ -8,11 +8,6 @@ import { useNavigation } from '@react-navigation/native';
 import AjustesMenu from './AjustesMenu';
 
 export default function Menu({ route, navigation }){
- 
-  const args = {
-    number: '5491125620754', 
-    prompt: false 
-  }
 
   const { userToken } = route.params;
 

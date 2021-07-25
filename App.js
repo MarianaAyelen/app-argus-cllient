@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { Provider } from 'react-native-paper';
 import Inicio from './screens/Inicio';
 import Login from './screens/Login';
@@ -7,6 +7,7 @@ import Menu from './screens/Menu';
 import Registro from './screens/Registro';
 import React from 'react';
 import AjustesMenu from './screens/AjustesMenu';
+import ContraseniaNueva from './screens/CambiarContrasenia';
 
 const Stack = createStackNavigator();
 
@@ -30,12 +31,18 @@ function NavStack() {
           component={Menu} 
           options={{ 
             title: 'Menú' ,
-            headerRight: () => <AjustesMenu />}}
+            headerRight: () => <AjustesMenu />,
+          }}
         />
         <Stack.Screen 
           name="Registro" 
           component={Registro} 
           options={{ title: 'Registarte' }}
+        />
+        <Stack.Screen 
+          name="ContraseniaNueva" 
+          component={ContraseniaNueva} 
+          options={{ title: 'Cambiar contraseña' }}
         />
     </Stack.Navigator>
   );
