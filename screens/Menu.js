@@ -5,6 +5,7 @@ import logo from '.././assets/argusIcon.png';
 import HeaderApp from './HeaderApp';
 import call from 'react-native-phone-call';
 import { useNavigation } from '@react-navigation/native';
+import AjustesMenu from './AjustesMenu';
 
 export default function Menu({ route, navigation }){
  
@@ -51,7 +52,6 @@ export default function Menu({ route, navigation }){
       <View style={styles.container}>
           <StatusBar style="auto" />
           <HeaderApp />
-        
           <View style={styles.row, {alignItems:'center', marginTop: 40}}>
               <TouchableOpacity onPress={() => callModule()} style={styles.button}>
               <Text style={styles.buttonText}>Llamar</Text>
