@@ -24,7 +24,7 @@ export default function AjustesMenu(){
                 }>
                 <Menu.Item onPress={() => {}} title="Configurar módulo" />
                 <Menu.Item onPress={() => {navigation.navigate('ContraseniaNueva')}} title="Cambiar contraseña" />
-                <Menu.Item onPress={() => {}} title="Ayuda" />
+                <Menu.Item onPress={() => {navigation.navigate('Ayuda')}} title="Ayuda" />
                 <Divider />
                 <Menu.Item onPress={() => {navigation.navigate('Inicio')}} 
                     title="Cerrar sesión"

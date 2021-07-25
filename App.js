@@ -8,6 +8,7 @@ import Registro from './screens/Registro';
 import React from 'react';
 import AjustesMenu from './screens/AjustesMenu';
 import ContraseniaNueva from './screens/CambiarContrasenia';
+import Ayuda from './screens/Ayuda';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,11 @@ function NavStack() {
           name="ContraseniaNueva" 
           component={ContraseniaNueva} 
           options={{ title: 'Cambiar contraseña' }}
+        />
+        <Stack.Screen 
+          name="Ayuda" 
+          component={Ayuda} 
+          options={{ title: 'Ayuda' }}
         />
     </Stack.Navigator>
   );
