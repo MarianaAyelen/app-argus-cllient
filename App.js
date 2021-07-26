@@ -9,6 +9,7 @@ import React from 'react';
 import AjustesMenu from './screens/AjustesMenu';
 import ContraseniaNueva from './screens/CambiarContrasenia';
 import Ayuda from './screens/Ayuda';
+import Mapa from './screens/Mapa';
 
 const Stack = createStackNavigator();
 
@@ -43,12 +44,19 @@ function NavStack() {
         <Stack.Screen 
           name="ContraseniaNueva" 
           component={ContraseniaNueva} 
-          options={{ title: 'Cambiar contraseña' }}
+          options={{ title: 'Cambiar contraseña',
+          headerRight: () => <AjustesMenu /> }}
         />
         <Stack.Screen 
           name="Ayuda" 
           component={Ayuda} 
-          options={{ title: 'Ayuda' }}
+          options={{ title: 'Ayuda',
+          headerRight: () => <AjustesMenu /> }}
+        />
+        <Stack.Screen 
+          name="Mapa" 
+          component={Mapa} 
+          options={{ title: 'Mapa' }}
         />
     </Stack.Navigator>
   );

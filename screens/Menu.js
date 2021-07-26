@@ -54,7 +54,7 @@ export default function Menu({ route, navigation }){
           </View>
 
           <View style={styles.row, {alignItems: 'center'}}>
-              <TouchableOpacity onPress={() => alert('Ver mapa')} style={styles.button}>
+              <TouchableOpacity onPress={() => navigation.navigate('Mapa')} style={styles.button}>
               <Text style={styles.buttonText}>Ver mapa</Text>
               </TouchableOpacity>
           </View>

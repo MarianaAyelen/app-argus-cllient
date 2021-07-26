@@ -23,8 +23,12 @@ export default function AjustesMenu(){
                 </TouchableOpacity>
                 }>
                 <Menu.Item onPress={() => {}} title="Configurar módulo" />
-                <Menu.Item onPress={() => {navigation.navigate('ContraseniaNueva')}} title="Cambiar contraseña" />
-                <Menu.Item onPress={() => {navigation.navigate('Ayuda')}} title="Ayuda" />
+                <Menu.Item onPress={() => {
+                    setShowMenu(false);
+                    navigation.navigate('ContraseniaNueva')}} title="Cambiar contraseña" />
+                <Menu.Item onPress={() => {
+                    setShowMenu(false);
+                    navigation.navigate('Ayuda')}} title="Ayuda" />
                 <Divider />
                 <Menu.Item onPress={() => {navigation.navigate('Inicio')}} 
                     title="Cerrar sesión"
