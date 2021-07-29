@@ -20,19 +20,6 @@ export default function Inicio() {
     };
   };
 
-  const pruebaFetch = async() => {
-    try{
-      let response = await fetch('http://app-argus-server.herokuapp.com/module/save-location/1/1/1',{
-        method: 'post'
-      });
-      let json = await response.json();
-      setServerResponse(json.response);
-      return json;
-    } catch (error) {
-      console.log(error); 
-    };
-  };
-
   useEffect(() => {
     callSomeApi();
   });
@@ -51,12 +38,6 @@ export default function Inicio() {
       <View style={styles.row, {alignItems: 'center'}}>
         <TouchableOpacity onPress={() =>  navigation.navigate('Registro')} style={styles.button}>
           <Text style={styles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.row, {alignItems: 'center'}}>
-        <TouchableOpacity onPress={() =>  pruebaFetch()} style={styles.button}>
-          <Text style={styles.buttonText}>Prueba</Text>
         </TouchableOpacity>
       </View>
 
