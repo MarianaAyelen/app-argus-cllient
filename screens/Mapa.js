@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MapView from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
 import { Marker } from 'react-native-maps';
 import logo from '.././assets/argusIcon.png'; 
 
@@ -40,10 +40,6 @@ export default function App() {
     callGetLocation();
   }, []);
 
-  /*componentDidMount(){
-    this.timer = 
-   } */
-
   return (
     <View style={styles.container}>
       <MapView style={styles.map}
@@ -58,9 +54,9 @@ export default function App() {
             longitude: longitude}}
             pinColor = {"blue"}
             title={"Modulo"}
-            description={"ubicación"}
-            //image={{uri: logo}}
-         />
+            description={"ubicación"}>
+            <Image source={require('.././assets/argusIcon.png')} style={{height: 56, width:56 }} />
+        </MapView.Marker>
     </MapView>
     </View>
   );
