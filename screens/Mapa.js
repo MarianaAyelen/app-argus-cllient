@@ -6,8 +6,8 @@ import logo from '.././assets/argusIcon.png';
 
 export default function App() {
 
-  const [latitude, setLatitude] = useState(45);
-  const [longitude, setLongitude] = useState(-78);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
 
   var markers = [
       {
@@ -55,7 +55,7 @@ export default function App() {
             pinColor = {"blue"}
             title={"Modulo"}
             description={"ubicación"}>
-            <Image source={require('.././assets/argusIcon.png')} style={{height: 56, width:56 }} />
+            <Image source={require('.././assets/argusIconMapa.png')} style={{height: 52, width:40 }} />
         </MapView.Marker>
     </MapView>
     </View>
