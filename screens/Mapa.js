@@ -1,34 +1,65 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Marker } from 'react-native-maps';
+import logo from '.././assets/argusIcon.png'; 
 
 export default function App() {
 
-var markers = [
-    {
-        latitude: 45.65,
-        longitude: -78.90,
-        title: 'Foo Place',
-        subtitle: '1234 Foo Drive'
-    }
+  const [latitude, setLatitude] = useState(45);
+  const [longitude, setLongitude] = useState(-78);
+
+  var markers = [
+      {
+          latitude: latitude,
+          longitude: longitude,
+          title: 'Tracker',
+          subtitle: 'Location'
+      }  
     ];
+
+  const callGetLocation = async() => {
+    try{
+      setInterval(async () => {        
+        let response = await fetch('https://app-argus-server.herokuapp.com/module/information/00000');
+        let json = await response.json();
+        let newLatitude = json.latitude;
+        let newLongitude = json.longitude;
+        if(newLatitude != latitude || newLongitude != longitude){
+          setLatitude(newLatitude);
+          setLongitude(newLongitude);
+        }
+        return json;
+      }, 1000);
+    } catch (error) {
+      console.log(error); 
+    };
+  };
+
+  useEffect(() => {
+    callGetLocation();
+  }, []);
+
+  /*componentDidMount(){
+    this.timer = 
+   } */
+
   return (
     <View style={styles.container}>
       <MapView style={styles.map}
-          initialRegion={{
-              latitude: -34.580383,
-              longitude: -58.454008,
-              latitudeDelta: 0.0122,
-              longitudeDelta: 0.0121
-          }}
-        >
+        region={{
+          latitude: latitude,
+          longitude: longitude,
+          latitudeDelta: 0.0122,
+          longitudeDelta: 0.0121
+      }}>
         <MapView.Marker
-            coordinate={{latitude: -34.580383,
-            longitude: -58.454008}}
+            coordinate={{latitude: latitude,
+            longitude: longitude}}
             pinColor = {"blue"}
             title={"Modulo"}
             description={"ubicación"}
+            //image={{uri: logo}}
          />
     </MapView>
     </View>
