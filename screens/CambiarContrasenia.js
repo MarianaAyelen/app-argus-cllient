@@ -5,9 +5,9 @@ import logo from '.././assets/argusIcon.png';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 
-export default function CambiarContrasenia() {
+export default function CambiarContrasenia({ route, navigation }) {
 
-    const navigation = useNavigation();
+    const { userToken } = route.params;
 
     const [password, setPassword] = useState('');
     const [newPassword, setNetPassword] = useState('');
@@ -21,22 +21,40 @@ export default function CambiarContrasenia() {
             setModalVisible(true);
             return;
         }
-        /*
+      
         try{
-            let response = await fetch(`https://app-argus-server.herokuapp.com/update-password?password=${password}&new=${newPassword}`, {
-                method: 'POST'});
+            let response = await fetch(`https://app-argus-server.herokuapp.com/update-password`, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  'Authorization': userToken
+                },         
+                body: JSON.stringify({
+                  oldPassword: password,
+                  newPassword: newPassword,
+                })});
             let json = await response.json();
             if(response.ok){
-                navigation.navigate('Menu');
+              navigation.navigate('Menu', {
+                userToken: userToken
+              });
             }else{
-                setModalText(json.message);
+              var textError = "";
+              if(json.oldPassword != null)
+                textError += json.oldPassword + " - ";
+              if(json.newPassword != null)
+                textError += json.newPassword + " - ";
+              if(json.message != null)
+                textError += json.message;
+
+              setModalText(textError)
                 setModalVisible(true);
             }
         } catch (error) {
             alert(error);
-        };*/
-
-        navigation.navigate('Menu');
+        };
     }
 
     return (
@@ -46,6 +64,7 @@ export default function CambiarContrasenia() {
             <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
                 <Text style={styles.inputLabel}>Contraseña: </Text>
                 <TextInput
+                secureTextEntry={true}
                 value={password}
                 maxLength = {12}
                 onChangeText={(password) => setPassword(password)}
@@ -59,7 +78,7 @@ export default function CambiarContrasenia() {
                 <TextInput
                 secureTextEntry={true}
                 value={newPassword}
-                maxLength = {8}
+                maxLength = {15}
                 onChangeText={(newPassword) => setNetPassword(newPassword)}
                 placeholder={'New Password'}
                 style={styles.input}
@@ -71,7 +90,7 @@ export default function CambiarContrasenia() {
                 <TextInput
                 secureTextEntry={true}
                 value={newPasswordAgain}
-                maxLength = {8}
+                maxLength = {15}
                 onChangeText={(newPasswordAgain) => setNewPasswordAgain(newPasswordAgain)}
                 placeholder={'New Password'}
                 style={styles.input}

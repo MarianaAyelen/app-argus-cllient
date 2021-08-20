@@ -65,6 +65,12 @@ export default function Menu({ route, navigation }){
               <Text style={styles.buttonText}>Ver alarmas</Text>
               </TouchableOpacity>
           </View>
+
+          <View style={styles.row, {alignItems: 'center'}}>
+              <TouchableOpacity onPress={() => navigation.navigate('ContraseniaNueva', {userToken: userToken})} style={styles.button}>
+              <Text style={styles.buttonText}>Cambiar Contraseña</Text>
+              </TouchableOpacity>
+          </View>
       </View>
   );
 

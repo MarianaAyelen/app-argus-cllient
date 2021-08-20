@@ -23,7 +23,12 @@ export default function Login() {
             userToken: token
           });
         }else{
-          setModalText(json.response);
+          var textError = "";
+          if(json.response != null)
+            textError += json.response + " - ";
+          if(json.message != null)
+            textError += json.message + " - ";
+          setModalText(textError);
           setModalVisible(true);
         }
       } catch (error) {
@@ -51,7 +56,7 @@ export default function Login() {
                 <TextInput
                 secureTextEntry={true}
                 value={password}
-                maxLength = {8}
+                maxLength = {15}
                 onChangeText={(password) => setPassword(password)}
                 placeholder={'Password'}
                 style={styles.input}
