@@ -22,13 +22,33 @@ export default function SignUp() {
             return;
         }
         try{
-            let response = await fetch(`https://app-argus-server.herokuapp.com/sign-up?username=${userName}&password=${password}`, {
-                method: 'POST'});
+            let response = await fetch(`https://app-argus-server.herokuapp.com/sign-up`, {
+                method: 'POST',       
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },         
+                body: JSON.stringify({
+                  username: userName,
+                  password: password,
+                })
+              });
             let json = await response.json();
             if(response.ok){
-                navigation.navigate('Menu');
+                let token = json.token;
+                navigation.navigate('Menu', {
+                  userToken: token
+                });
             }else{
-                setModalText(json.message);
+                var textError = "";
+                if(json.password != null)
+                  textError += json.password + " - ";
+                if(json.username != null)
+                  textError += json.username + " - ";
+                if(json.message != null)
+                  textError += json.message;
+
+                setModalText(textError)
                 setModalVisible(true);
             }
         } catch (error) {
@@ -56,7 +76,7 @@ export default function SignUp() {
                 <TextInput
                 secureTextEntry={true}
                 value={password}
-                maxLength = {8}
+                maxLength = {20}
                 onChangeText={(password) => setPassword(password)}
                 placeholder={'Password'}
                 style={styles.input}
@@ -68,7 +88,7 @@ export default function SignUp() {
                 <TextInput
                 secureTextEntry={true}
                 value={passwordAgain}
-                maxLength = {8}
+                maxLength = {20}
                 onChangeText={(passwordAgain) => setPasswordAgain(passwordAgain)}
                 placeholder={'Password'}
                 style={styles.input}
