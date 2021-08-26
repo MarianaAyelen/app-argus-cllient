@@ -5,6 +5,7 @@ import logo from '.././assets/argusIcon.png';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Variables from './variables.js';
 
 export default function SignUp() {
 
@@ -37,6 +38,7 @@ export default function SignUp() {
             let json = await response.json();
             if(response.ok){
                 let token = json.token;
+                global.token = token;
                 navigation.navigate('Menu', {
                   userToken: token
                 });

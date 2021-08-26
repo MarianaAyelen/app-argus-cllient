@@ -41,9 +41,6 @@ export default function Inicio() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.row, {marginTop:200, marginLeft:210}}>
-        <Text>{`El servidor te dice: ${serverResponse}`}</Text>
-      </View>
   </View>
   );
 }
