@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pres
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function SignUp() {
 
@@ -60,49 +61,50 @@ export default function SignUp() {
         <View style={styles.container}>
             <StatusBar style="auto" />
             <HeaderApp />
-            <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
-                <Text style={styles.inputLabel}>Usuario: </Text>
-                <TextInput
-                value={username}
-                maxLength = {12}
-                onChangeText={(username) => setUsername(username)}
-                placeholder={'Username'}
-                style={styles.input}
-                />
-            </View>
+            <KeyboardAwareScrollView>
+              <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
+                  <Text style={styles.inputLabel}>Usuario: </Text>
+                  <TextInput
+                  value={username}
+                  maxLength = {12}
+                  onChangeText={(username) => setUsername(username)}
+                  placeholder={'Username'}
+                  style={styles.input}
+                  />
+              </View>
 
-            <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
-                <Text style={styles.inputLabel}>Contraseña: </Text>
-                <TextInput
-                secureTextEntry={true}
-                value={password}
-                maxLength = {20}
-                onChangeText={(password) => setPassword(password)}
-                placeholder={'Password'}
-                style={styles.input}
-                />
-            </View>
+              <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
+                  <Text style={styles.inputLabel}>Contraseña: </Text>
+                  <TextInput
+                  secureTextEntry={true}
+                  value={password}
+                  maxLength = {20}
+                  onChangeText={(password) => setPassword(password)}
+                  placeholder={'Password'}
+                  style={styles.input}
+                  />
+              </View>
 
-            <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
-                <Text style={styles.inputLabel}>Repetir contraseña: </Text>
-                <TextInput
-                secureTextEntry={true}
-                value={passwordAgain}
-                maxLength = {20}
-                onChangeText={(passwordAgain) => setPasswordAgain(passwordAgain)}
-                placeholder={'Password'}
-                style={styles.input}
-                />
-            </View>
+              <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
+                  <Text style={styles.inputLabel}>Repetir contraseña: </Text>
+                  <TextInput
+                  secureTextEntry={true}
+                  value={passwordAgain}
+                  maxLength = {20}
+                  onChangeText={(passwordAgain) => setPasswordAgain(passwordAgain)}
+                  placeholder={'Password'}
+                  style={styles.input}
+                  />
+              </View>
 
-            <View style={styles.row, {alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => signUpRequest(username, password, passwordAgain)} style={styles.buttonSignIn}>
-                <Text style={styles.buttonText}>Sign Up</Text>
-                </TouchableOpacity>
-            </View>
-            
+              <View style={styles.row, {alignItems: 'center'}}>
+                  <TouchableOpacity onPress={() => signUpRequest(username, password, passwordAgain)} style={styles.buttonSignIn}>
+                  <Text style={styles.buttonText}>Sign Up</Text>
+                  </TouchableOpacity>
+              </View>
+              
 
-            <View style={styles.centeredView}>
+              <View style={styles.centeredView}>
             <Modal animationType="fade" transparent={true} visible={modalVisible}
               onRequestClose={() => {
                 setModalVisible(!modalVisible);
@@ -120,7 +122,7 @@ export default function SignUp() {
               </View>
             </Modal>
           </View>
-
+          </KeyboardAwareScrollView>
         </View>
     );
 }

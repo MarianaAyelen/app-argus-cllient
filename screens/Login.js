@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
+import Variables from './variables.js';
 
 export default function Login() {
 
@@ -19,6 +20,7 @@ export default function Login() {
         let json = await response.json();
         if(response.ok){
           let token = json.token;
+          global.token = token;
           navigation.navigate('Menu', {
             userToken: token
           });

@@ -4,19 +4,21 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pres
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-export default function CambiarContrasenia({ route, navigation }) {
 
-    const { userToken } = route.params;
+export default function CambiarContrasenia() {
 
+
+    const navigation = useNavigation();
     const [password, setPassword] = useState('');
-    const [newPassword, setNetPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
     const [newPasswordAgain, setNewPasswordAgain] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState('');
 
-    async function updatePassword(userName, password, passwordAgain) {
-        if(password != passwordAgain){
+    async function updatePassword(password, newPassword, newPasswordAgain) {
+        if(newPassword != newPasswordAgain){
             setModalText('Las contraseñas no coinciden');
             setModalVisible(true);
             return;
@@ -29,7 +31,7 @@ export default function CambiarContrasenia({ route, navigation }) {
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
-                  'Authorization': userToken
+                  'Authorization': global.token
                 },         
                 body: JSON.stringify({
                   oldPassword: password,
@@ -38,7 +40,7 @@ export default function CambiarContrasenia({ route, navigation }) {
             let json = await response.json();
             if(response.ok){
               navigation.navigate('Menu', {
-                userToken: userToken
+                userToken: global.token
               });
             }else{
               var textError = "";
@@ -58,9 +60,11 @@ export default function CambiarContrasenia({ route, navigation }) {
     }
 
     return (
-        <View style={styles.container}>
-            <StatusBar style="auto" />
-            <HeaderApp />
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <HeaderApp />
+            <KeyboardAwareScrollView>
+            
             <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
                 <Text style={styles.inputLabel}>Contraseña: </Text>
                 <TextInput
@@ -79,7 +83,7 @@ export default function CambiarContrasenia({ route, navigation }) {
                 secureTextEntry={true}
                 value={newPassword}
                 maxLength = {15}
-                onChangeText={(newPassword) => setNetPassword(newPassword)}
+                onChangeText={(newPassword) => setNewPassword(newPassword)}
                 placeholder={'New Password'}
                 style={styles.input}
                 />
@@ -122,12 +126,16 @@ export default function CambiarContrasenia({ route, navigation }) {
               </View>
             </Modal>
           </View>
+          </KeyboardAwareScrollView>
+      </View>
 
-        </View>
     );
 }
 
 const styles = StyleSheet.create({
+    container1: {
+      flex: 1
+    },
     container: {
       position: 'absolute',
       backgroundColor: '#fff',

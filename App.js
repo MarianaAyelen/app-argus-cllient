@@ -31,10 +31,10 @@ function NavStack() {
         <Stack.Screen 
           name="Menu" 
           component={Menu} 
-          options={{ 
-            title: 'Menú' ,
+          options= {{
             headerRight: () => <AjustesMenu />,
-          }}
+              title: 'Menú' ,
+            }}
         />
         <Stack.Screen 
           name="Registro" 
