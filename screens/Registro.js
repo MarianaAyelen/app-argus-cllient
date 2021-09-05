@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Modal, Pres
 import logo from '.././assets/argusIcon.png'; 
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Variables from './variables.js';
 
 export default function SignUp() {

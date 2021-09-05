@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable }
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import Variables from './variables.js';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Login() {
 
@@ -42,55 +43,56 @@ export default function Login() {
         <View style={styles.container}>
             <StatusBar style="auto" />
             <HeaderApp />
-            <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
-                <Text style={styles.inputLabel}>Usuario: </Text>
-                <TextInput
-                value={username}
-                maxLength = {12}
-                onChangeText={(username) => setUsername(username)}
-                placeholder={'Username'}
-                style={styles.input}
-                />
-            </View>
+            <KeyboardAwareScrollView>
+              <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
+                  <Text style={styles.inputLabel}>Usuario: </Text>
+                  <TextInput
+                  value={username}
+                  maxLength = {12}
+                  onChangeText={(username) => setUsername(username)}
+                  placeholder={'Username'}
+                  style={styles.input}
+                  />
+              </View>
 
-            <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
-                <Text style={styles.inputLabel}>Contraseña: </Text>
-                <TextInput
-                secureTextEntry={true}
-                value={password}
-                maxLength = {15}
-                onChangeText={(password) => setPassword(password)}
-                placeholder={'Password'}
-                style={styles.input}
-                />
-            </View>
+              <View style={styles.row, {alignItems: 'center', marginTop: 40}}>
+                  <Text style={styles.inputLabel}>Contraseña: </Text>
+                  <TextInput
+                  secureTextEntry={true}
+                  value={password}
+                  maxLength = {15}
+                  onChangeText={(password) => setPassword(password)}
+                  placeholder={'Password'}
+                  style={styles.input}
+                  />
+              </View>
 
-            <View style={styles.row, {alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => loginRequest(username, password)} style={styles.buttonSignIn}>
-                <Text style={styles.buttonText}>Sign In</Text>
-                </TouchableOpacity>
-            </View>
-            
-
-            <View style={styles.centeredView}>
-            <Modal animationType="fadegit " transparent={true} visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(!modalVisible);
-              }}>
+              <View style={styles.row, {alignItems: 'center'}}>
+                  <TouchableOpacity onPress={() => loginRequest(username, password)} style={styles.buttonSignIn}>
+                  <Text style={styles.buttonText}>Sign In</Text>
+                  </TouchableOpacity>
+              </View>
+              
 
               <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Text style={styles.modalText}>{modalText}</Text>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text style={styles.textStyle}>Cerrar</Text>
-                  </Pressable>
-                </View>
-              </View>
-            </Modal>
-          </View>
+              <Modal animationType="fadegit " transparent={true} visible={modalVisible}
+                onRequestClose={() => {
+                  setModalVisible(!modalVisible);
+                }}>
 
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <Text style={styles.modalText}>{modalText}</Text>
+                    <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={() => setModalVisible(!modalVisible)}>
+                      <Text style={styles.textStyle}>Cerrar</Text>
+                    </Pressable>
+                  </View>
+                </View>
+              </Modal>
+            </View>
+          </KeyboardAwareScrollView>
         </View>
     );
 }
