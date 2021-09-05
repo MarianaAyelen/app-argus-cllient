@@ -15,7 +15,7 @@ export default function HeaderApp() {
                 </View>
             </View>
             <View>
-                <Text style={styles.locationStyle}>Location Traker</Text>  
+                <Text style={styles.locationStyle}>Location Tracker</Text>  
             </View>
         </View>
     );
