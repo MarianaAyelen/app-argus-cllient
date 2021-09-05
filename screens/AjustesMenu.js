@@ -3,6 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Button, Menu, Divider, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import Variables from './variables.js';
 
 export default function AjustesMenu(){
     const [showMenu, setShowMenu] = useState(false);
@@ -30,7 +31,10 @@ export default function AjustesMenu(){
                     setShowMenu(false);
                     navigation.navigate('Ayuda')}} title="Ayuda" />
                 <Divider />
-                <Menu.Item onPress={() => {navigation.navigate('Inicio')}} 
+                <Menu.Item onPress={() => {
+                        global.token = "";
+                        navigation.navigate('Inicio');
+                    }} 
                     title="Cerrar sesión"
                     icon="logout"
                 />
