@@ -10,6 +10,7 @@ import AjustesMenu from './screens/AjustesMenu';
 import ContraseniaNueva from './screens/CambiarContrasenia';
 import Ayuda from './screens/Ayuda';
 import Mapa from './screens/Mapa';
+import configuracion from './screens/Configuracion';
 
 const Stack = createStackNavigator();
 
@@ -57,6 +58,11 @@ function NavStack() {
           name="Mapa" 
           component={Mapa} 
           options={{ title: 'Mapa' }}
+        />
+        <Stack.Screen 
+          name="Configuration" 
+          component={configuracion} 
+          options={{ title: 'Configuración' }}
         />
     </Stack.Navigator>
   );
