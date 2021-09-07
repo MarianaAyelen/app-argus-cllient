@@ -18,7 +18,8 @@ export default function Menu({ route, navigation }){
       number: number, 
       prompt: false 
     }
-    call(args).catch(console.error);
+    if(number != null)
+      call(args).catch(console.error);
   }
 
   async function getModuleNumber(userName, password) {
@@ -36,7 +37,8 @@ export default function Menu({ route, navigation }){
       if(response.ok){
         return json.number
       }else{
-        alert(json)
+        alert(json.message)
+        return null
       }
     } catch (error) {
       alert(error);

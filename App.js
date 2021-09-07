@@ -11,6 +11,7 @@ import ContraseniaNueva from './screens/CambiarContrasenia';
 import Ayuda from './screens/Ayuda';
 import Mapa from './screens/Mapa';
 import configuracion from './screens/Configuracion';
+import configuracionPaso2 from './screens/ConfiguracionPaso2';
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,13 @@ function NavStack() {
           name="Configuration" 
           component={configuracion} 
           options={{ title: 'Configuración' }}
+        />
+
+        <Stack.Screen 
+          name="ConfigurationStep2" 
+          component={configuracionPaso2} 
+          options={{ title: 'Configuración paso 2',
+          headerRight: () => <AjustesMenu /> }}
         />
     </Stack.Navigator>
   );

@@ -21,6 +21,12 @@ export default function configuracion(){
         if (await isAvailable) {
             const { result } = await SMS.sendSMSAsync([moduleNumber], msjText);
         }
+
+        navigation.navigate("ConfigurationStep2", {
+          serialNumber: serialNumber,
+          moduleNumber: moduleNumber,
+          phoneNumber: phoneNumber
+        })
     }
 
     return (
