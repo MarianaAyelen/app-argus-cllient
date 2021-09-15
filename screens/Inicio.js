@@ -20,6 +20,7 @@ export default function Inicio() {
     };
   };
 
+
   useEffect(() => {
     callSomeApi();
   });
