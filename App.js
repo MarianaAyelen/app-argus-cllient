@@ -12,12 +12,20 @@ import Ayuda from './screens/Ayuda';
 import Mapa from './screens/Mapa';
 import configuracion from './screens/Configuracion';
 import configuracionPaso2 from './screens/ConfiguracionPaso2';
+import FirstStep from './screens/FirstStep'
 
 const Stack = createStackNavigator();
 
 function NavStack() {
   return (
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="FirstStep">
+        <Stack.Screen 
+          name="FirstStep" 
+          component={FirstStep} 
+          options={{
+            title: 'Bienvenido'
+          }}
+        />
         <Stack.Screen 
           name="Inicio" 
           component={Inicio} 
