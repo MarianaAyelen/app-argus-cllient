@@ -24,7 +24,7 @@ class UserStorage {
 
     get = async () => {
         try {
-            const value = await AsyncStorage.getItem(this.keyStorage);
+            value = await AsyncStorage.getItem(this.keyStorage);
             if(value != null) {
                 return JSON.parse(value);
             }
@@ -34,7 +34,7 @@ class UserStorage {
     }
 
     remove = async() => {
-        await AsyncStorage.removeItem(this.keyStorage);
+        await AsyncStorage.setItem(this.keyStorage, "")
     }
 
 }

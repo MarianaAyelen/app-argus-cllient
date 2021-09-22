@@ -4,19 +4,39 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import HeaderApp from './HeaderApp';
 import * as Progress from 'react-native-progress';
+import { userStorage } from './LocalStorage';
 
 export default function Inicio() {
 
   const navigation = useNavigation();
 
-  const [loading, setLoading] = useState(true);
+  const [nextScreen, setNextScreen] = useState("");
 
-  const startLoading = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
+  const getToken = async() => {
+      var localStorageResult = await userStorage.get();
+      if(localStorageResult == null){
+        return "";
+      }
+      var token = await localStorageResult["token"];
+      return token;
+  }
+
+  const getNextScreen = async() => {
+      let token = await getToken();
+      console.log("TOKEN" + token);
+      if(token != ""){
+        console.log("redirect MENU")
+        navigation.navigate('Menu')
+        return
+      }
+      console.log("redirect INICIO")
+      navigation.navigate('Inicio')
+  }
+
+
+  useEffect(() => {
+      getNextScreen();
+  })
 
   return (
     <View style={styles.container}>

@@ -32,9 +32,6 @@ export default function Login() {
       }
     }
 
-    async function deleteToken() {
-      await userStorage.remove();
-    }
 
     async function loginRequest(userName, password) {
       try{
@@ -44,13 +41,7 @@ export default function Login() {
           let token = json.token;
           global.token = token;
           saveToken(token);
-          getToken();
-
-          deleteToken();
-          getToken();
-          navigation.navigate('Menu', {
-            userToken: token
-          });
+          navigation.navigate('Menu');
         }else{
           var textError = "";
           if(json.response != null)

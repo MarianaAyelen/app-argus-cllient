@@ -6,6 +6,7 @@ import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Variables from './variables.js';
+import { userStorage } from './LocalStorage';
 
 export default function SignUp() {
 
@@ -38,10 +39,8 @@ export default function SignUp() {
             let json = await response.json();
             if(response.ok){
                 let token = json.token;
-                global.token = token;
-                navigation.navigate('Menu', {
-                  userToken: token
-                });
+                await userStorage.save(token);
+                navigation.navigate('Menu');
             }else{
                 var textError = "";
                 if(json.password != null)

@@ -7,10 +7,11 @@ import call from 'react-native-phone-call';
 import { useNavigation } from '@react-navigation/native';
 import AjustesMenu from './AjustesMenu';
 import Variables from './variables.js';
+import { userStorage } from './LocalStorage';
 
-export default function Menu({ route, navigation }){
+export default function Menu({ navigation }){
 
-  const { userToken } = route.params;
+  const [token, setToken] = useState("");
 
   async function callModule() {
     let number = await getModuleNumber();
@@ -22,9 +23,15 @@ export default function Menu({ route, navigation }){
       call(args).catch(console.error);
   }
 
+  const getToken = async() => {
+    var localStorageResult = await userStorage.get();
+    let token = await localStorageResult["token"];
+    return token;
+}
+
   async function getModuleNumber(userName, password) {
+    var token = await getToken();
     try{
-      let token = JSON.stringify(userToken).replace(/['"]+/g, '');
       let response = await fetch(`https://app-argus-server.herokuapp.com/module/get-number`, { 
         method: 'get', 
         mode: 'cors',
@@ -33,6 +40,7 @@ export default function Menu({ route, navigation }){
           'Authorization': token
         }
       });
+      console.log(response)
       let json = await response.json();
       if(response.ok){
         return json.number
@@ -44,7 +52,6 @@ export default function Menu({ route, navigation }){
       alert(error);
     };
   }
-
 
   return(
       <View style={styles.container}>
