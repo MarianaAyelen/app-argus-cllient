@@ -6,7 +6,6 @@ import HeaderApp from './HeaderApp';
 import call from 'react-native-phone-call';
 import { useNavigation } from '@react-navigation/native';
 import AjustesMenu from './AjustesMenu';
-import Variables from './variables.js';
 import { userStorage } from './LocalStorage';
 
 export default function Menu({ navigation }){

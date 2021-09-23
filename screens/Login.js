@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
-import Variables from './variables.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { userStorage } from './LocalStorage';
 
@@ -39,7 +38,6 @@ export default function Login() {
         let json = await response.json();
         if(response.ok){
           let token = json.token;
-          global.token = token;
           saveToken(token);
           navigation.navigate('Menu');
         }else{

@@ -5,7 +5,6 @@ import logo from '.././assets/argusIcon.png';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Variables from './variables.js';
 import { userStorage } from './LocalStorage';
 
 export default function SignUp() {

@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Button, Menu, Divider, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-import Variables from './variables.js';
 import { userStorage } from './LocalStorage';
 
 export default function AjustesMenu(){
