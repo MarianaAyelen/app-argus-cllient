@@ -3,11 +3,15 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Button, Menu, Divider, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
-import Variables from './variables.js';
+import { userStorage } from './LocalStorage';
 
 export default function AjustesMenu(){
     const [showMenu, setShowMenu] = useState(false);
     const navigation = useNavigation();
+
+    async function deleteToken() {
+        await userStorage.remove();
+    }
 
     return(
         <View style={{}}>
@@ -32,7 +36,7 @@ export default function AjustesMenu(){
                     navigation.navigate('Ayuda')}} title="Ayuda" />
                 <Divider />
                 <Menu.Item onPress={() => {
-                        global.token = "";
+                        deleteToken();
                         navigation.navigate('Inicio');
                     }} 
                     title="Cerrar sesión"

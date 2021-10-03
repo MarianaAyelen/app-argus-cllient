@@ -5,7 +5,7 @@ import logo from '.././assets/argusIcon.png';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-
+import { userStorage } from './LocalStorage';
 
 export default function CambiarContrasenia() {
 
@@ -17,6 +17,13 @@ export default function CambiarContrasenia() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState('');
 
+    const getToken = async() => {
+      var localStorageResult = await userStorage.get();
+
+      let token = await localStorageResult["token"];
+      return token;
+  }
+
     async function updatePassword(password, newPassword, newPasswordAgain) {
         if(newPassword != newPasswordAgain){
             setModalText('Las contraseñas no coinciden');
@@ -24,6 +31,7 @@ export default function CambiarContrasenia() {
             return;
         }
       
+        let token = await getToken();
         try{
             let response = await fetch(`https://app-argus-server.herokuapp.com/update-password`, {
                 method: 'POST',
@@ -31,7 +39,7 @@ export default function CambiarContrasenia() {
                 headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
-                  'Authorization': global.token
+                  'Authorization': token
                 },         
                 body: JSON.stringify({
                   oldPassword: password,

@@ -3,45 +3,53 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import HeaderApp from './HeaderApp';
+import * as Progress from 'react-native-progress';
+import { userStorage } from './LocalStorage';
 
 export default function Inicio() {
-  const [serverResponse, setServerResponse] = useState();
 
   const navigation = useNavigation();
 
-  const callSomeApi = async() => {
-    try{
-      let response = await fetch('https://app-argus-server.herokuapp.com/hello');
-      let json = await response.json();
-      setServerResponse(json.response);
-      return json;
-    } catch (error) {
-      console.log(error); 
-    };
-  };
+  const [nextScreen, setNextScreen] = useState("");
+
+  const getToken = async() => {
+      var localStorageResult = await userStorage.get();
+      if(localStorageResult == null){
+        return "";
+      }
+      var token = await localStorageResult["token"];
+      return token;
+  }
+
+  const getNextScreen = async() => {
+      let token = await getToken();
+      console.log("TOKEN" + token);
+      if(token != ""){
+        console.log("redirect MENU")
+        navigation.navigate('Menu')
+        return
+      }
+      console.log("redirect INICIO")
+      navigation.navigate('Inicio')
+  }
 
 
   useEffect(() => {
-    callSomeApi();
-  });
+      getNextScreen();
+  })
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <HeaderApp />
+      <View style={styles.column}>
+          <View style={styles.column, {marginTop: 160}}>
 
-      <View style={styles.row, {alignItems:'center', marginTop: 110}}>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.button}>
-          <Text style={styles.buttonText}>Iniciar sesión</Text>
-        </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+              <Progress.Circle size={130} indeterminate={true} />
+          </View>
       </View>
-
-      <View style={styles.row, {alignItems: 'center'}}>
-        <TouchableOpacity onPress={() =>  navigation.navigate('Registro')} style={styles.button}>
-          <Text style={styles.buttonText}>Registrarse</Text>
-        </TouchableOpacity>
-      </View>
-
   </View>
   );
 }
@@ -54,10 +62,12 @@ const styles = StyleSheet.create({
     height: '100%'
   },   
   column: {
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'center'
   },
   row: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   logoStyle: {
     width: 60,
@@ -93,4 +103,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center'
   }, 
+  spinnerTextStyle: {
+    color: '#2E86C1',
+  },
 });

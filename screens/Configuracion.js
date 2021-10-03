@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
-import Variables from './variables.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as SMS from 'expo-sms';
 

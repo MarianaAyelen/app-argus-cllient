@@ -3,25 +3,30 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
-import Variables from './variables.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import * as SMS from 'expo-sms';
 import { Icon } from 'react-native-elements'
-
+import { userStorage } from './LocalStorage';
 
 export default function configuracionPaso2({ route, navigation }){
 
+    const getToken = async() => {
+      var localStorageResult = await userStorage.get();
+      let token = await localStorageResult["token"];
+      return token;
+    }
 
     const { serialNumber, moduleNumber, phoneNumber } = route.params;
 
     async function sendConfiguration() {
+      let token = await getToken();
         try{
           let response = await fetch(`https://app-argus-server.herokuapp.com/config/${serialNumber}/${moduleNumber}/${phoneNumber}`, { 
             method: 'get', 
             mode: 'cors',
             headers: {
               'Accept': 'application/json',
-              'Authorization': global.token
+              'Authorization': token
             }
           });
           let json = await response.json();

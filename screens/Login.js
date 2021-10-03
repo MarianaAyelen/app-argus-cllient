@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
-import Variables from './variables.js';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { userStorage } from './LocalStorage';
 
 export default function Login() {
 
@@ -15,16 +15,31 @@ export default function Login() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState('');
 
+    async function saveToken(params) {
+      await userStorage.save(token);
+    }
+
+    async function getToken() {
+      let tokenUserStorage = await userStorage.get();
+      if(tokenUserStorage != null){
+        let token = (tokenUserStorage["token"]);
+        console.log("TOKEN: " + token)
+        return token;
+      }else{
+        console.log("token null")
+        return null;
+      }
+    }
+
+
     async function loginRequest(userName, password) {
       try{
         let response = await fetch(`https://app-argus-server.herokuapp.com/login?username=${userName}&password=${password}`);
         let json = await response.json();
         if(response.ok){
           let token = json.token;
-          global.token = token;
-          navigation.navigate('Menu', {
-            userToken: token
-          });
+          saveToken(token);
+          navigation.navigate('Menu');
         }else{
           var textError = "";
           if(json.response != null)

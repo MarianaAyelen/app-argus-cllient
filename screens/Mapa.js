@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import MapView from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
-import { Marker } from 'react-native-maps';
 import logo from '.././assets/argusIcon.png'; 
 
 export default function App() {
@@ -36,28 +34,10 @@ export default function App() {
     };
   };
 
-  useEffect(() => {
-    callGetLocation();
-  }, []);
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map}
-        region={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.0122,
-          longitudeDelta: 0.0121
-      }}>
-        <MapView.Marker
-            coordinate={{latitude: latitude,
-            longitude: longitude}}
-            pinColor = {"blue"}
-            title={"Modulo"}
-            description={"ubicación"}>
-            <Image source={require('.././assets/argusIconMapa.png')} style={{height: 52, width:40 }} />
-        </MapView.Marker>
-    </MapView>
+      
     </View>
   );
 }
