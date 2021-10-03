@@ -16,7 +16,7 @@ export default function configuracion(){
     async function sendSMS(serialNumber, moduleNumber, phoneNumber) {
         let isAvailable = await SMS.isAvailableAsync();
         phoneNumber = "0054911" + phoneNumber;
-        let msjText = "A9Gmodule-" + serialNumber + "-" + phoneNumber + "-";
+        let msjText = "A9Gmodule" + serialNumber + "-" + phoneNumber + "-";
         if (await isAvailable) {
             const { result } = await SMS.sendSMSAsync([moduleNumber], msjText);
         }
