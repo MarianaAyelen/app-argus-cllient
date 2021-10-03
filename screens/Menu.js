@@ -10,7 +10,6 @@ import { userStorage } from './LocalStorage';
 
 export default function Menu({ navigation }){
 
-  const [token, setToken] = useState("");
 
   async function callModule() {
     let number = await getModuleNumber();
@@ -19,7 +18,7 @@ export default function Menu({ navigation }){
       prompt: false 
     }
     if(number != null)
-      call(args).catch(console.error);
+      call(args).catch(console.log("ERROR AL LLAMAR"));
   }
 
   const getToken = async() => {
@@ -39,7 +38,6 @@ export default function Menu({ navigation }){
           'Authorization': token
         }
       });
-      console.log(response)
       let json = await response.json();
       if(response.ok){
         return json.number
@@ -70,8 +68,8 @@ export default function Menu({ navigation }){
 
           
           <View style={styles.row, {alignItems: 'center'}}>
-              <TouchableOpacity onPress={() => alert('Ver alarmas')} style={styles.button}>
-              <Text style={styles.buttonText}>Ver alarmas</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Actividad')} style={styles.button}>
+              <Text style={styles.buttonText}>Ver actividad</Text>
               </TouchableOpacity>
           </View>
       </View>

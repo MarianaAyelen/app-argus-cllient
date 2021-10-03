@@ -15,7 +15,7 @@ export default function Login() {
     const [modalVisible, setModalVisible] = useState(false);
     const [modalText, setModalText] = useState('');
 
-    async function saveToken(params) {
+    async function saveToken(token) {
       await userStorage.save(token);
     }
 

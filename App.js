@@ -12,7 +12,8 @@ import Ayuda from './screens/Ayuda';
 import Mapa from './screens/Mapa';
 import configuracion from './screens/Configuracion';
 import configuracionPaso2 from './screens/ConfiguracionPaso2';
-import FirstStep from './screens/FirstStep'
+import FirstStep from './screens/FirstStep';
+import actividad from './screens/actividad';
 
 const Stack = createStackNavigator();
 
@@ -79,6 +80,12 @@ function NavStack() {
           component={configuracionPaso2} 
           options={{ title: 'Configuración paso 2',
           headerRight: () => <AjustesMenu /> }}
+        />
+
+        <Stack.Screen 
+          name="Actividad" 
+          component={actividad} 
+          options={{ title: 'Actividad' }}
         />
     </Stack.Navigator>
   );
