@@ -85,7 +85,8 @@ function NavStack() {
         <Stack.Screen 
           name="Actividad" 
           component={actividad} 
-          options={{ title: 'Actividad' }}
+          options={{ title: 'Actividad',
+          headerRight: () => <AjustesMenu /> }}
         />
     </Stack.Navigator>
   );
