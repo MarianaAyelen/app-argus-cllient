@@ -22,6 +22,7 @@ export default function Inicio() {
 
 
   useEffect(() => {
+    let isMounted = true
     callSomeApi();
   });
 
