@@ -87,7 +87,7 @@ export default function ZonaSegura(){
                     latitude: initialLatitude,
                     longitude: initialLongitude
                     }}
-                    title="Aqui estoy"
+                    title="Zona segura"
                     onDragEnd={(e) => movementMarker(e)}
                 />
             </MapView>
