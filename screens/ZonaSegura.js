@@ -88,8 +88,9 @@ export default function ZonaSegura(){
                     longitude: initialLongitude
                     }}
                     title="Zona segura"
-                    onDragEnd={(e) => movementMarker(e)}
-                />
+                    onDragEnd={(e) => movementMarker(e)}>
+                    <Image source={require('.././assets/marker-32.png')} style={{height: 40, width:40 }} />
+                </MapView.Marker>
             </MapView>
 
             <View style={styles.row, {alignItems: 'center'}}>
