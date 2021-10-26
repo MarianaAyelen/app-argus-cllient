@@ -53,7 +53,7 @@ export default function configuracionPaso2({ route, navigation }){
                         color='#C0392B'
                         size={60}
                         marginTop= {10}/>
-                    <Text style={styles.text}>Presiona el botón cuando observe la luz roja titilar.</Text>
+                    <Text style={styles.text}>Presiona el botón cuando se encienda el led.</Text>
                 </View>
           
                 <View style={styles.row, {alignItems: 'center'}}>

@@ -5,7 +5,7 @@ import Inicio from './screens/Inicio';
 import Login from './screens/Login';
 import Menu from './screens/Menu';
 import Registro from './screens/Registro';
-import React from 'react';
+import React, { useEffect } from 'react';
 import AjustesMenu from './screens/AjustesMenu';
 import ContraseniaNueva from './screens/CambiarContrasenia';
 import Ayuda from './screens/Ayuda';
@@ -14,6 +14,8 @@ import configuracion from './screens/Configuracion';
 import configuracionPaso2 from './screens/ConfiguracionPaso2';
 import FirstStep from './screens/FirstStep';
 import actividad from './screens/actividad';
+import { notificaciones } from './screens/Notificaciones';
+
 
 const Stack = createStackNavigator();
 
@@ -93,6 +95,10 @@ function NavStack() {
 }
 
 export default function App() {
+  useEffect(() => {
+    notificaciones.getPushNotificationPermissions();
+  });
+
   return (
     <Provider>
       <NavigationContainer>
