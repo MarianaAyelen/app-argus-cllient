@@ -1,8 +1,37 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import { StyleSheet, Text, View, Image, Button, Platform } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
+import { notificaciones } from './Notificaciones';
+import * as Notifications from 'expo-notifications';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HeaderApp() {
+
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    notificaciones.getPushNotificationPermissions().then(token => setExpoPushToken(token));
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log("response");
+      navigation.navigate('Ayuda')
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
     return (
         <View style={styles.row}>
@@ -16,6 +45,13 @@ export default function HeaderApp() {
             </View>
             <View>
                 <Text style={styles.locationStyle}>Location Tracker</Text>  
+            </View>
+
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-around',}}>
+              <Button
+                title="Press to Send Notification"
+                onPress={async () => {await notificaciones.sendPushNotification(expoPushToken);}}
+              />
             </View>
         </View>
     );
