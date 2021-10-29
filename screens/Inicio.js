@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import HeaderApp from './HeaderApp';
 
 export default function Inicio() {
+  
   const [serverResponse, setServerResponse] = useState();
 
   const navigation = useNavigation();
