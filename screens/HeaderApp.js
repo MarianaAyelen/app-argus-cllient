@@ -13,6 +13,34 @@ export default function HeaderApp() {
   const responseListener = useRef();
   const navigation = useNavigation();
 
+  const callIsAlert = async() => {
+    try{
+        setInterval(async () => {        
+        let response = await fetch('https://app-argus-server.herokuapp.com/module/is-alert/00000', { 
+          method: 'get', 
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/json',
+          }
+        });
+        let json = await response.json();
+      
+        if(json.response == 'true'){
+          console.log("IS ALERT = " + json.response)
+          var cause = "Saldo insuficiente";
+          console.log(cause)
+          await notificaciones.sendPushNotification(expoPushToken, cause)
+        }
+      }, 20000);
+    } catch (error) {
+      console.log(error); 
+    };
+  };
+
+  useEffect(() => {
+    callIsAlert();
+  }, []);
+
   useEffect(() => {
     notificaciones.getPushNotificationPermissions().then(token => setExpoPushToken(token));
 
@@ -45,13 +73,6 @@ export default function HeaderApp() {
             </View>
             <View>
                 <Text style={styles.locationStyle}>Location Tracker</Text>  
-            </View>
-
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'space-around',}}>
-              <Button
-                title="Press to Send Notification"
-                onPress={async () => {await notificaciones.sendPushNotification(expoPushToken);}}
-              />
             </View>
         </View>
     );

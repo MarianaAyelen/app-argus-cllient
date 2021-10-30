@@ -4,16 +4,6 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
-/*
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false
-
-    })
-})
-*/ 
 class Notificaciones {
     getPushNotificationPermissions = async () => {
         console.log("1")
@@ -43,12 +33,13 @@ class Notificaciones {
         return (await Notifications.getExpoPushTokenAsync()).data
     }
 
-    sendPushNotification = async(expoPushToken) => {
+    sendPushNotification = async(expoPushToken, cause) => {
+      console.log("Sending..." + cause)
       const message = {
         to: expoPushToken,
         sound: 'default',
-        title: 'Original Title',
-        body: 'And here is the body!',
+        title: 'ARGUS',
+        body: cause,
         data: { someData: 'goes here' },
       };
     
@@ -61,6 +52,7 @@ class Notificaciones {
         },
         body: JSON.stringify(message),
       });
+      console.log("Notification sended")
     }
 }
 
