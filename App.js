@@ -14,6 +14,8 @@ import configuracion from './screens/Configuracion';
 import configuracionPaso2 from './screens/ConfiguracionPaso2';
 import FirstStep from './screens/FirstStep';
 import actividad from './screens/actividad';
+import ZonaSegura from './screens/ZonaSegura';
+import ZonaExclusion from './screens/ZonaExclusion';
 
 const Stack = createStackNavigator();
 
@@ -86,6 +88,19 @@ function NavStack() {
           name="Actividad" 
           component={actividad} 
           options={{ title: 'Actividad',
+          headerRight: () => <AjustesMenu /> }}
+        />
+        <Stack.Screen 
+          name="ZonaSegura" 
+          component={ZonaSegura} 
+          options={{ title: 'Zona Segura',
+          headerRight: () => <AjustesMenu /> }}
+        />
+
+        <Stack.Screen 
+          name="ZonaExclusion" 
+          component={ZonaExclusion} 
+          options={{ title: 'Zona Peligrosa',
           headerRight: () => <AjustesMenu /> }}
         />
     </Stack.Navigator>
