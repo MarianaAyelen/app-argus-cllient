@@ -24,7 +24,7 @@ export default function HeaderApp() {
   const callIsAlert = async() => {
     var token = await getToken();
     try{
-        console.log("CALL IS ALERT INTERVAL")
+ //       console.log("CALL IS ALERT INTERVAL")
         let response = await fetch('https://app-argus-server.herokuapp.com/is-alert', { 
           method: 'get', 
           mode: 'cors',
@@ -38,9 +38,10 @@ export default function HeaderApp() {
         
         if(json.isAlert == 'true'){
           console.log("IS ALERT = " + json.isAlert)
-          var cause = "Saldo insuficiente";
-          console.log(cause)
-          await notificaciones.sendPushNotification(expoPushToken, cause)
+          json.causes.forEach(function(elemento, indice, array) {
+            console.log(elemento, indice);
+            notificaciones.sendPushNotification(expoPushToken, elemento)
+          })
         }
 
     } catch (error) {
