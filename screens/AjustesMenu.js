@@ -27,7 +27,9 @@ export default function AjustesMenu(){
                     />
                 </TouchableOpacity>
                 }>
-                <Menu.Item onPress={() => {navigation.navigate('Configuration')}} title="Configurar módulo" />
+                <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('Configuration')}} title="Configurar módulo" />
+                <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('ZonaSegura')}} title="Zona segura" />
+                <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('ZonaExclusion')}} title="Zona peligrosa" />
                 <Menu.Item onPress={() => {
                     setShowMenu(false);
                     navigation.navigate('ContraseniaNueva')}} title="Cambiar contraseña" />
@@ -36,6 +38,7 @@ export default function AjustesMenu(){
                     navigation.navigate('Ayuda')}} title="Ayuda" />
                 <Divider />
                 <Menu.Item onPress={() => {
+                        setShowMenu(false);
                         deleteToken();
                         navigation.navigate('Inicio');
                     }} 

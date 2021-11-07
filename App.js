@@ -18,7 +18,8 @@ import { notificaciones } from './screens/Notificaciones';
 import * as Notifications from 'expo-notifications';
 import { Text, View, Button, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import ZonaSegura from './screens/ZonaSegura';
+import ZonaExclusion from './screens/ZonaExclusion';
 
 const Stack = createStackNavigator();
 
@@ -101,6 +102,19 @@ function NavStack() {
           name="Actividad" 
           component={actividad} 
           options={{ title: 'Actividad',
+          headerRight: () => <AjustesMenu /> }}
+        />
+        <Stack.Screen 
+          name="ZonaSegura" 
+          component={ZonaSegura} 
+          options={{ title: 'Zona Segura',
+          headerRight: () => <AjustesMenu /> }}
+        />
+
+        <Stack.Screen 
+          name="ZonaExclusion" 
+          component={ZonaExclusion} 
+          options={{ title: 'Zona Peligrosa',
           headerRight: () => <AjustesMenu /> }}
         />
     </Stack.Navigator>
