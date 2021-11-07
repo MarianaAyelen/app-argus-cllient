@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import HeaderApp from './HeaderApp';
 import { StatusBar } from 'expo-status-bar';
 import MapView, { Marker }  from 'react-native-maps';
-import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity, TextInput, Modal, Pressable } from 'react-native';
 import { userStorage } from './LocalStorage';
 
 
 export default function ZonaSegura(){
 
+
+    const navigation = useNavigation();
     const [latitude, setLatitude] = useState(0);
     const [longitude, setLongitude] = useState(0);
     const [radius, setRadius] = useState(0);
@@ -15,6 +18,11 @@ export default function ZonaSegura(){
     const [initialLatitude, setInitialLatitude] = useState(0);
     const [initialLongitude, setInitialLongitude] = useState(0);
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalText, setModalText] = useState('');
+
+    const [isSafeZone, setIsSafeZone] = useState(false);
+    
     async function saveSafeZone() {
         await callSaveSafeZone();
         console.log("SAVE SAFE ZONE", latitude, longitude);
@@ -37,8 +45,9 @@ export default function ZonaSegura(){
             'Authorization': token
           },         
           body: JSON.stringify({
-            latitude: latitude,
-            longitude: longitude,
+            latitude: latitude != 0 ? latitude : initialLatitude,
+            longitude: longitude != 0 ? longitude : initialLongitude,
+            radius: radius
           })
         });
       let json = await response.json();
@@ -52,6 +61,24 @@ export default function ZonaSegura(){
       alert(error);
   };
   }
+
+  const deleteSafeZone = async() => {
+    var token = await getToken();
+    try{    
+        let response = await fetch('https://app-argus-server.herokuapp.com/delete-safe-zone', { 
+            method: 'delete', 
+            mode: 'cors',
+            headers: {
+            'Accept': 'application/json',
+            'Authorization': token
+            }
+        });
+        navigation.navigate('Menu');
+    } catch (error) {
+      console.log(error); 
+    };
+  };
+
 
 
   const callGetLocation = async() => {
@@ -81,9 +108,39 @@ export default function ZonaSegura(){
     };
   };
 
+  const callIsSafeZone = async()=> {
+    var token = await getToken();
+    try{    
+        let response = await fetch('https://app-argus-server.herokuapp.com/safe-zone', { 
+            method: 'get', 
+            mode: 'cors',
+            headers: {
+            'Accept': 'application/json',
+            'Authorization': token
+            }
+        });
+
+        let json = await response.json();
+        let latitude = json.latitude;
+        let longitude = json.longitude;
+        console.log("GET SAFE ZONE" + longitude + latitude)
+        if(latitude != null && longitude != null){
+          console.log("SET SAFE ZONE: ", true)
+            setIsSafeZone(true)
+        }
+        return await json;
+    } catch (error) {
+      console.log(error); 
+    };
+  }
+
   useEffect(() => {
     callGetLocation();
   }, [callGetLocation]);
+
+  useEffect(() => {
+    callIsSafeZone();
+  });
 
   function movementMarker(e){
     const latitude  = e.nativeEvent.coordinate.latitude
@@ -103,13 +160,18 @@ export default function ZonaSegura(){
         <View style={styles.container}>
             <StatusBar style="auto" />
             <HeaderApp />
-            <View style={styles.row}>
-              <Text style={styles.inputLabel}>Radio [m]: </Text>
-              <TextInput value={radius}
-                        maxLength = {12} onChangeText={(radius) => setRadius(radius)}
-                        placeholder={'Radio'} style={styles.input} keyboardType="numeric"
-                  />
-            </View>
+            {
+                !isSafeZone ? 
+                <View style={styles.row}>
+                    <Text style={styles.inputLabel}>Radio [m]: </Text>
+                    <TextInput value={radius}
+                              maxLength = {12} onChangeText={(radius) => setRadius(radius)}
+                              placeholder={'Radio'} style={styles.input} keyboardType="numeric"
+                        />
+                </View>
+                : null
+            } 
+            
             <MapView style={styles.map}
                 region={{
                 latitude: latitude || initialLatitude,
@@ -129,12 +191,38 @@ export default function ZonaSegura(){
                     <Image source={require('.././assets/marker-32.png')} style={{height: 40, width:40 }} />
                 </MapView.Marker>
             </MapView>
-              <View style={styles.row, {alignItems: 'center'}}>
-                  <TouchableOpacity onPress={() => saveSafeZone()} style={styles.buttonGuardar} >
-                      <Text style={styles.buttonText}>Guardar</Text>
-                  </TouchableOpacity>
-              </View>
+              {
+                !isSafeZone ?
+                  <View style={styles.row, {alignItems: 'center'}}>
+                    <TouchableOpacity onPress={() => saveSafeZone()} style={styles.buttonGuardar} >
+                        <Text style={styles.buttonText}>Guardar</Text>
+                    </TouchableOpacity>
+                  </View>
+                  :
+                  <View style={styles.row, {alignItems: 'center'}}>
+                    <TouchableOpacity onPress={() => deleteSafeZone()} style={styles.buttonGuardar} >
+                        <Text style={styles.buttonText}>Borrar</Text>
+                    </TouchableOpacity>
+                  </View>
+              }
+            
+              
+              <Modal animationType="fade" transparent={true} visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}>
 
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>{modalText}</Text>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}>
+                    <Text style={styles.textStyle}>Cerrar</Text>
+                  </Pressable>
+                </View>
+              </View>
+            </Modal>
         </View>
     );
 }
@@ -204,4 +292,47 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: '#e8e8e8',
       },
+      centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22
+      },
+      modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+      },
+      button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+      },
+      buttonClose: {
+        backgroundColor: "#C0392B",
+        borderRadius: 15,
+        width: '80%',
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center",
+        fontSize: 18
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 15,
+        color: "#C0392B",
+      }
 });
