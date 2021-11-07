@@ -100,7 +100,7 @@ function NavStack() {
         <Stack.Screen 
           name="ZonaExclusion" 
           component={ZonaExclusion} 
-          options={{ title: 'Zona Exclusión',
+          options={{ title: 'Zona Peligrosa',
           headerRight: () => <AjustesMenu /> }}
         />
     </Stack.Navigator>
