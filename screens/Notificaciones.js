@@ -4,10 +4,19 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
 class Notificaciones {
     getPushNotificationPermissions = async () => {
         console.log("1")
-        const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        //const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+        const { status: existingStatus } = await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
     
         console.log("2")
@@ -16,7 +25,8 @@ class Notificaciones {
         if (existingStatus !== 'granted') {
           // Android remote notification permissions are granted during the app
           // install, so this will only ask on iOS
-          const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+          // const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+          const { status } = await Notifications.requestPermissionsAsync();
           finalStatus = status;
         }
     
@@ -30,6 +40,15 @@ class Notificaciones {
         // Get the token that uniquely identifies this device
         console.log("Notification Token: ", (await Notifications.getExpoPushTokenAsync()).data);
 
+        if (Platform.OS === 'android') {
+          Notifications.setNotificationChannelAsync('default', {
+            name: 'default',
+            importance: Notifications.AndroidImportance.MAX,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: '#FF231F7C',
+          });
+        }
+        
         return (await Notifications.getExpoPushTokenAsync()).data
     }
 

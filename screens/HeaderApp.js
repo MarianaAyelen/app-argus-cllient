@@ -24,7 +24,7 @@ export default function HeaderApp() {
   const callIsAlert = async() => {
     var token = await getToken();
     try{
- //       console.log("CALL IS ALERT INTERVAL")
+        //console.log("CALL IS ALERT INTERVAL")
         let response = await fetch('https://app-argus-server.herokuapp.com/is-alert', { 
           method: 'get', 
           mode: 'cors',
@@ -38,10 +38,13 @@ export default function HeaderApp() {
         
         if(json.isAlert == 'true'){
           console.log("IS ALERT = " + json.isAlert)
+          console.log("%%%% NOTIFICACIONES %%%%%%%")
           json.causes.forEach(function(elemento, indice, array) {
             console.log(elemento, indice);
             notificaciones.sendPushNotification(expoPushToken, elemento)
-          })
+          });
+          console.log("%%%% END NOTIFICACIONES %%%%%%%");
+          
         }
 
     } catch (error) {
@@ -52,7 +55,7 @@ export default function HeaderApp() {
   useEffect(() => {
     callIsAlert()
       .then(() => {
-        setInterval(() => { }, 30000);
+        setInterval(() => { }, 60000);
         setChangeInterval(!changeInterval)
       });
   }, [changeInterval]);
@@ -69,7 +72,7 @@ export default function HeaderApp() {
     // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
       console.log("response");
-      navigation.navigate('Ayuda')
+      navigation.navigate('Mapa')
     });
 
     return () => {
