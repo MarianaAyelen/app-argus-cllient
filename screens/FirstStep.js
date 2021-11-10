@@ -24,7 +24,7 @@ export default function Inicio() {
   const getNextScreen = async() => {
       let token = await getToken();
       console.log("TOKEN" + token);
-      if(token != ""){
+      if( token != ""){
         console.log("redirect MENU")
         navigation.navigate('Menu')
         return

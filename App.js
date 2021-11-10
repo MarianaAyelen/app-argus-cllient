@@ -20,6 +20,7 @@ import { Text, View, Button, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import ZonaSegura from './screens/ZonaSegura';
 import ZonaExclusion from './screens/ZonaExclusion';
+import desconectar from './screens/disconnect';
 
 const Stack = createStackNavigator();
 
@@ -115,6 +116,13 @@ function NavStack() {
           name="ZonaExclusion" 
           component={ZonaExclusion} 
           options={{ title: 'Zona Peligrosa',
+          headerRight: () => <AjustesMenu /> }}
+        />
+
+        <Stack.Screen 
+          name="Desconectar" 
+          component={desconectar} 
+          options={{ title: 'Desvincular',
           headerRight: () => <AjustesMenu /> }}
         />
     </Stack.Navigator>
