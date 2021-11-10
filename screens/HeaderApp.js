@@ -1,8 +1,86 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import { StyleSheet, Text, View, Image, Button, Platform } from 'react-native';
 import logo from '.././assets/argusIcon.png'; 
+import { notificaciones } from './Notificaciones';
+import * as Notifications from 'expo-notifications';
+import { useNavigation } from '@react-navigation/native';
+import { userStorage } from './LocalStorage';
 
 export default function HeaderApp() {
+
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const [changeInterval, setChangeInterval] = useState(true);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const navigation = useNavigation();
+
+  const getToken = async() => {
+    var localStorageResult = await userStorage.get();
+    let token = await localStorageResult["token"];
+    return token;
+}
+
+  const callIsAlert = async() => {
+    var token = await getToken();
+    try{
+        //console.log("CALL IS ALERT INTERVAL")
+        let response = await fetch('https://app-argus-server.herokuapp.com/is-alert', { 
+          method: 'get', 
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/json',
+            'Authorization': token
+          }
+        });
+        
+        let json = await response.json();
+        
+        if(json.isAlert == 'true'){
+          console.log("IS ALERT = " + json.isAlert)
+          console.log("%%%% NOTIFICACIONES %%%%%%%")
+          json.causes.forEach(function(elemento, indice, array) {
+            console.log(elemento, indice);
+            notificaciones.sendPushNotification(expoPushToken, elemento)
+          });
+          console.log("%%%% END NOTIFICACIONES %%%%%%%");
+          
+        }
+
+    } catch (error) {
+      console.log(error); 
+    };
+  };
+
+  useEffect(() => {
+    setInterval(callIsAlert, 5000);
+/*     callIsAlert()
+      .then(() => {
+        setInterval(() => { }, 30000);
+        setChangeInterval(!changeInterval)
+      }); */
+  }, []);
+
+  useEffect(() => {
+    console.log("HERE 2")
+    notificaciones.getPushNotificationPermissions().then(token => setExpoPushToken(token));
+
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log("response");
+      navigation.navigate('Mapa')
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
     return (
         <View style={styles.row}>

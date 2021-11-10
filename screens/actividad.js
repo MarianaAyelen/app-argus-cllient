@@ -9,6 +9,7 @@ export default function actividad(){
 
 
   const [activities, setActivities] = useState([])
+  const [isActivity, setIsActivity] = useState(true)
 
   useEffect(() => {
     getActions();
@@ -29,9 +30,17 @@ export default function actividad(){
 
       let json = await response.json();
       var newArray = [];
+
+      if(json.length == 0){
+        setIsActivity(false);
+        return;
+      }
+
+      setIsActivity(true)
+
       for (let index = 0; index < json.length; index++) {
         let cause = getCause(json[index].causa);
-        newArray[index] = {id : index, text: "" + json[index].fecha + " - " + cause};
+        newArray[index] = {id : index.toString(), text: "" + json[index].fecha + " - " + cause};
         console.log(json[index].fecha + " - " + json[index].causa)
       }
 
@@ -65,6 +74,11 @@ export default function actividad(){
         <View style={styles.container}>
             <StatusBar style="auto" />
             <HeaderApp />
+            {
+              !isActivity ? 
+                <Text style={styles.basicText}>El módulo no posee actividades</Text>
+              : null
+            }
             <FlatList
               keyExtractor = {item => item.id}  
               data={activities}
@@ -110,5 +124,12 @@ const styles = StyleSheet.create({
       borderBottomColor: '#2E86C1',
       borderBottomWidth: 1,
       marginRight: 15
-    }
+    },
+    basicText: {
+      fontFamily: 'serif',
+      color: '#2E86C1',
+      fontSize: 20,
+      marginTop: 20,
+      marginLeft: 15,
+    },
 });

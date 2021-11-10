@@ -123,7 +123,11 @@ const callIsUnsafeZone = async()=> {
       console.log("GET UNSAFE ZONE" + longitude + latitude)
       if(latitude != null && longitude != null){
         console.log("SET UNSAFE ZONE: ", true)
-          setIsUnsafeZone(true)
+        setLatitude(latitude)
+        setInitialLatitude(latitude)
+        setLongitude(longitude)
+        setInitialLongitude(longitude)
+        setIsUnsafeZone(true)
       }
       return await json;
   } catch (error) {
@@ -133,7 +137,7 @@ const callIsUnsafeZone = async()=> {
 
 useEffect(() => {
   callGetLocation();
-}, [callGetLocation]);
+}, []);
 
 
 useEffect(() => {

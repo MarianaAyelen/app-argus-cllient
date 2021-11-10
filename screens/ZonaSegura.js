@@ -125,7 +125,11 @@ export default function ZonaSegura(){
         let longitude = json.longitude;
         console.log("GET SAFE ZONE" + longitude + latitude)
         if(latitude != null && longitude != null){
-          console.log("SET SAFE ZONE: ", true)
+            console.log("SET SAFE ZONE: ", true)
+            setLatitude(latitude)
+            setInitialLatitude(latitude)
+            setLongitude(longitude)
+            setInitialLongitude(longitude)
             setIsSafeZone(true)
         }
         return await json;
@@ -136,7 +140,7 @@ export default function ZonaSegura(){
 
   useEffect(() => {
     callGetLocation();
-  }, [callGetLocation]);
+  }, []);
 
   useEffect(() => {
     callIsSafeZone();
