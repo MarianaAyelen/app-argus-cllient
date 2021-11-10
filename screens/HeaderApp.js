@@ -53,12 +53,13 @@ export default function HeaderApp() {
   };
 
   useEffect(() => {
-    callIsAlert()
+    setInterval(callIsAlert, 5000);
+/*     callIsAlert()
       .then(() => {
-        setInterval(() => { }, 60000);
+        setInterval(() => { }, 30000);
         setChangeInterval(!changeInterval)
-      });
-  }, [changeInterval]);
+      }); */
+  }, []);
 
   useEffect(() => {
     console.log("HERE 2")

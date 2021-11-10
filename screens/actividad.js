@@ -29,6 +29,7 @@ export default function actividad(){
 
       let json = await response.json();
       var newArray = [];
+
       for (let index = 0; index < json.length; index++) {
         let cause = getCause(json[index].causa);
         newArray[index] = {id : index, text: "" + json[index].fecha + " - " + cause};
