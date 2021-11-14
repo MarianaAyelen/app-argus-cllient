@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Button, Menu, Divider, Provider } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/Feather';
@@ -7,11 +7,49 @@ import { userStorage } from './LocalStorage';
 
 export default function AjustesMenu(){
     const [showMenu, setShowMenu] = useState(false);
+    const [isConnect, setIsConnect] = useState(false)
     const navigation = useNavigation();
 
     async function deleteToken() {
-        await userStorage.remove();
+        await userStorage.save("");
     }
+
+      
+  const getToken = async() => {
+    var localStorageResult = await userStorage.get();
+    let token = await localStorageResult["token"];
+    return token;
+    } 
+
+    const getIfModule = async() => {
+        var token = await getToken();
+        console.log("ACTIVIDAD REQUEST NOW")
+        try{
+          let response = await fetch('https://app-argus-server.herokuapp.com/with-module', { 
+            method: 'get', 
+            mode: 'cors',
+            headers: {
+              'Accept': 'application/json',
+              'Authorization': token
+            }
+          });
+    
+          let json = await response.json();
+          console.log("IS CONNECT: " + json.response)
+          if(json.response == 'true'){
+              setIsConnect(true);
+          }else{
+            setIsConnect(false)
+          }
+        } catch (error) {
+          console.log(error); 
+        };
+      };
+    
+
+      useEffect(() => {
+        getIfModule();
+      });
 
     return(
         <View style={{}}>
@@ -27,8 +65,14 @@ export default function AjustesMenu(){
                     />
                 </TouchableOpacity>
                 }>
-                <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('Configuration')}} title="Configurar módulo" />
-                <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('ZonaSegura')}} title="Zona segura" />
+                    {
+                        !isConnect ?
+                        <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('Configuration')}} title="Configurar módulo" />
+                        : 
+                        <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('Desconectar')}} title="Desvincular" />
+
+                    }
+                                <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('ZonaSegura')}} title="Zona segura" />
                 <Menu.Item onPress={() => {setShowMenu(false); navigation.navigate('ZonaExclusion')}} title="Zona peligrosa" />
                 <Menu.Item onPress={() => {
                     setShowMenu(false);
