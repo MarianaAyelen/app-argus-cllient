@@ -30,7 +30,7 @@ export default function Menu({ navigation }){
   async function getModuleNumber(userName, password) {
     var token = await getToken();
     try{
-      let response = await fetch(`https://app-argus-server.herokuapp.com/module/get-number`, { 
+      let response = await fetch(`https://app-argus-server.herokuapp.com/get-number`, { 
         method: 'get', 
         mode: 'cors',
         headers: {
