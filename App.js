@@ -24,16 +24,6 @@ import desconectar from './screens/disconnect';
 
 const Stack = createStackNavigator();
 
-
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
 function NavStack() {
   return (
       <Stack.Navigator initialRouteName="FirstStep">

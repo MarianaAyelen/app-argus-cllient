@@ -6,6 +6,14 @@ import * as Notifications from 'expo-notifications';
 import { useNavigation } from '@react-navigation/native';
 import { userStorage } from './LocalStorage';
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function HeaderApp() {
 
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -63,7 +71,7 @@ export default function HeaderApp() {
 
   useEffect(() => {
     console.log("HERE 2")
-    notificaciones.getPushNotificationPermissions().then(token => setExpoPushToken(token));
+    notificaciones.getPushNotificationPermissions().then(token2 => setExpoPushToken(token2));
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
