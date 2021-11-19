@@ -6,6 +6,7 @@ import * as Notifications from 'expo-notifications';
 import { useNavigation } from '@react-navigation/native';
 import { userStorage } from './LocalStorage';
 
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -18,9 +19,10 @@ export default function HeaderApp() {
 
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
-  const [changeInterval, setChangeInterval] = useState(true);
   const notificationListener = useRef();
   const responseListener = useRef();
+
+  const [changeInterval, setChangeInterval] = useState(true);
   const navigation = useNavigation();
 
   const getToken = async() => {
@@ -49,12 +51,11 @@ export default function HeaderApp() {
           console.log("%%%% NOTIFICACIONES %%%%%%%")
           json.causes.forEach(function(elemento, indice, array) {
             console.log(elemento, indice);
-            notificaciones.sendPushNotification(expoPushToken, elemento)
+            notificaciones.sendPushNotification(elemento)
           });
           console.log("%%%% END NOTIFICACIONES %%%%%%%");
           
         }
-
     } catch (error) {
       console.log(error); 
     };
@@ -62,17 +63,11 @@ export default function HeaderApp() {
 
   useEffect(() => {
     setInterval(callIsAlert, 5000);
-/*     callIsAlert()
-      .then(() => {
-        setInterval(() => { }, 30000);
-        setChangeInterval(!changeInterval)
-      }); */
   }, []);
 
   useEffect(() => {
-    console.log("HERE 2")
     notificaciones.getPushNotificationPermissions().then(token2 => setExpoPushToken(token2));
-
+    
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
       setNotification(notification);
@@ -140,3 +135,5 @@ const styles = StyleSheet.create({
       marginLeft: 30,
     },
   });
+
+  

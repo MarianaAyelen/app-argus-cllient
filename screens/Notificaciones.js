@@ -4,15 +4,9 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
 
 class Notificaciones {
+  
     getPushNotificationPermissions = async () => {
         console.log("1")
         //const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -52,17 +46,20 @@ class Notificaciones {
         return (await Notifications.getExpoPushTokenAsync()).data
     }
 
-    sendPushNotification = async(expoPushToken, cause) => {
+    sendPushNotification = async(cause) => {
+      console.log("AWAIT TOKEN")
+      var expoPushToken = await this.getPushNotificationPermissions();
       console.log("Sending..." + cause)
+      console.log("token: " + expoPushToken)
       const message = {
         to: expoPushToken,
         sound: 'default',
         title: 'ARGUS',
         body: cause,
-        data: { someData: 'goes here' },
+        data: { },
       };
     
-      await fetch('https://exp.host/--/api/v2/push/send', {
+      let re = await fetch('https://exp.host/--/api/v2/push/send', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -71,8 +68,9 @@ class Notificaciones {
         },
         body: JSON.stringify(message),
       });
-      console.log("Notification sended")
+      console.log("Notification sended: " + re.status)
     }
+    
 }
 
 

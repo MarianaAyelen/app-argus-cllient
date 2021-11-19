@@ -14,13 +14,12 @@ import configuracion from './screens/Configuracion';
 import configuracionPaso2 from './screens/ConfiguracionPaso2';
 import FirstStep from './screens/FirstStep';
 import actividad from './screens/actividad';
-import { notificaciones } from './screens/Notificaciones';
-import * as Notifications from 'expo-notifications';
-import { Text, View, Button, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import ZonaSegura from './screens/ZonaSegura';
 import ZonaExclusion from './screens/ZonaExclusion';
 import desconectar from './screens/disconnect';
+import { notificaciones } from './screens/Notificaciones';
+import * as Notifications from 'expo-notifications';
+import { userStorage } from './screens/LocalStorage';
 
 const Stack = createStackNavigator();
 
