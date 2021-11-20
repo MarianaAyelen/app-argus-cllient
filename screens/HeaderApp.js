@@ -4,7 +4,6 @@ import logo from '.././assets/argusIcon.png';
 import { notificaciones } from './Notificaciones';
 import * as Notifications from 'expo-notifications';
 import { useNavigation } from '@react-navigation/native';
-import { userStorage } from './LocalStorage';
 
 
 Notifications.setNotificationHandler({
@@ -22,48 +21,7 @@ export default function HeaderApp() {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  const [changeInterval, setChangeInterval] = useState(true);
   const navigation = useNavigation();
-
-  const getToken = async() => {
-    var localStorageResult = await userStorage.get();
-    let token = await localStorageResult["token"];
-    return token;
-}
-
-  const callIsAlert = async() => {
-    var token = await getToken();
-    try{
-        //console.log("CALL IS ALERT INTERVAL")
-        let response = await fetch('https://app-argus-server.herokuapp.com/is-alert', { 
-          method: 'get', 
-          mode: 'cors',
-          headers: {
-            'Accept': 'application/json',
-            'Authorization': token
-          }
-        });
-        
-        let json = await response.json();
-        
-        if(json.isAlert == 'true'){
-          console.log("IS ALERT = " + json.isAlert)
-          console.log("%%%% NOTIFICACIONES %%%%%%%")
-          json.causes.forEach(function(elemento, indice, array) {
-            console.log(elemento, indice);
-            notificaciones.sendPushNotification(elemento)
-          });
-          console.log("%%%% END NOTIFICACIONES %%%%%%%");
-          
-        }
-    } catch (error) {
-      console.log(error); 
-    };
-  };
-
-  useEffect(() => {
-    setInterval(callIsAlert, 5000);
-  }, []);
 
   useEffect(() => {
     notificaciones.getPushNotificationPermissions().then(token2 => setExpoPushToken(token2));
