@@ -19,7 +19,7 @@ export default function actividad(){
     var token = await getToken();
     console.log("ACTIVIDAD REQUEST NOW")
     try{
-      let response = await fetch('https://app-argus-server.herokuapp.com/alerts', { 
+      let response = await fetch('https://app-argus-server.herokuapp.com/actions', { 
         method: 'get', 
         mode: 'cors',
         headers: {

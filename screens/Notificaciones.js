@@ -55,7 +55,6 @@ class Notificaciones {
         to: expoPushToken,
         sound: 'default',
         title: 'ARGUS',
-        
         body: cause,
         data: { },
       };
