@@ -6,6 +6,7 @@ import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { userStorage } from './LocalStorage';
+import { notificaciones } from './Notificaciones';
 
 export default function SignUp() {
 
@@ -24,6 +25,7 @@ export default function SignUp() {
             return;
         }
         try{
+            let expoToken = await notificaciones.getPushNotificationPermissions();
             let response = await fetch(`https://app-argus-server.herokuapp.com/sign-up`, {
                 method: 'POST',       
                 headers: {
@@ -33,6 +35,7 @@ export default function SignUp() {
                 body: JSON.stringify({
                   username: userName,
                   password: password,
+                  expoToken: expoToken
                 })
               });
             let json = await response.json();

@@ -10,16 +10,17 @@ export default function actividad(){
 
   const [activities, setActivities] = useState([])
   const [isActivity, setIsActivity] = useState(true)
+  const [first, setFirst] = useState(false)
 
   useEffect(() => {
     getActions();
-  });
+  }, [first]);
 
   const getActions = async() => {
     var token = await getToken();
     console.log("ACTIVIDAD REQUEST NOW")
     try{
-      let response = await fetch('https://app-argus-server.herokuapp.com/alerts', { 
+      let response = await fetch('https://app-argus-server.herokuapp.com/actions', { 
         method: 'get', 
         mode: 'cors',
         headers: {
@@ -30,6 +31,7 @@ export default function actividad(){
 
       let json = await response.json();
       var newArray = [];
+      setFirst(false)
 
       if(json.length == 0){
         setIsActivity(false);
@@ -59,6 +61,12 @@ export default function actividad(){
         return "BATERIA BAJA"
       case "INSUFFICIENT_CREDIT":
         return "CREDITO INSUFICIENTE"
+      case "ALARM":
+        return "ALARMA"
+      case "SAFE_ZONE":
+        return "ZONA SEGURA SUPERADA"
+      case "UNSAFE_ZONE":
+        return "ZONA PELIGROSA ALCANZADA"
       default:
         return "CAUSA DESCONOCIDA"
     }

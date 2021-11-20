@@ -31,7 +31,7 @@ export default function configuracionPaso2({ route, navigation }){
           });
           let json = await response.json();
           if(response.ok){
-            
+            navigation.navigate('Menu')
           }else{
             alert(json.message)
             return null
