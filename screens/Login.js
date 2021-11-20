@@ -5,6 +5,7 @@ import HeaderApp from './HeaderApp';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { userStorage } from './LocalStorage';
+import { notificaciones } from './Notificaciones';
 
 export default function Login() {
 
@@ -34,8 +35,23 @@ export default function Login() {
 
     async function loginRequest(userName, password) {
       try{
-        let response = await fetch(`https://app-argus-server.herokuapp.com/login?username=${userName}&password=${password}`);
+        let expoToken = await 
+        notificaciones.getPushNotificationPermissions();
+        let response = await fetch(`https://app-argus-server.herokuapp.com/login`, {
+          method: 'POST',       
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },         
+          body: JSON.stringify({
+            username: userName,
+            password: password,
+            expoToken: expoToken
+          
+          })
+        });
         let json = await response.json();
+        console.log(json)
         if(response.ok){
           let token = json.token;
           saveToken(token);
